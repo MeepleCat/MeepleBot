@@ -33,7 +33,7 @@ ignoredServers = []
 timeStartedB = time.ctime()
 timeStarted = time.time()
 messagesSent = 0
-timesSomeoneHasSaidArk = 0 
+timesSomeoneHasSaidArk = 0
 timesSomeoneHasScreamedAtBot = 0
 lastTimeSomeoneSaidArk = 0
 lastMessageFromBot = ""
@@ -50,6 +50,6 @@ async def on_ready():
 @client.event
 async def on_message(message):
     message_lower = message.content.lower()
-    return message_lower
+
 
 client.run(os.environ['TOKEN'])
