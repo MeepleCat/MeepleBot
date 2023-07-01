@@ -1,6 +1,6 @@
 import discord
 import os
-import random
+# import random
 import time
 
 # from keep_alive import keep_alive
@@ -11,13 +11,16 @@ from oauth2client.service_account import ServiceAccountCredentials
 pingStart = "@"
 
 scopes = [
-'https://www.googleapis.com/auth/spreadsheets',
-'https://www.googleapis.com/auth/drive'
+    'https://www.googleapis.com/auth/spreadsheets',
+    'https://www.googleapis.com/auth/drive'
 ]
-credentials = ServiceAccountCredentials.from_json_keyfile_name("Google_Account.json", scopes) #access the json key you downloaded earlier 
+credentials = ServiceAccountCredentials.from_json_keyfile_name("Google_Account.json", scopes)
+# access the json key you downloaded earlier
 
-file = gspread.authorize(credentials) # authenticate the JSON key with gspread
-sheet = file.open("ConquistadorsWhitelist") #open sheet
+file = gspread.authorize(credentials)
+# authenticate the JSON key with gspread
+sheet = file.open("ConquistadorsWhitelist")
+# open sheet
 sheet = sheet.sheet1
 
 intents = discord.Intents.all()
@@ -41,11 +44,12 @@ msg1ago = ""
 
 @client.event
 async def on_ready():
-  print("We have logged in as {0.user}".format(client))
+    print("We have logged in as {0.user}".format(client))
 
 
 @client.event
 async def on_message(message):
-  message_lower = message.content.lower()
+    message_lower = message.content.lower()
+    return message_lower
 
 client.run(os.environ['TOKEN'])
