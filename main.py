@@ -3,7 +3,7 @@ import os
 import random
 import time
 
-from keep_alive import keep_alive
+# from keep_alive import keep_alive
 
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
@@ -37,3 +37,15 @@ lastMessageFromBot = ""
 
 msg2ago = ""
 msg1ago = ""
+
+
+@client.event
+async def on_ready():
+  print("We have logged in as {0.user}".format(client))
+
+
+@client.event
+async def on_message(message):
+  message_lower = message.content.lower()
+
+client.run(os.environ['TOKEN'])
