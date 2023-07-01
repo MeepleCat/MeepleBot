@@ -3,12 +3,12 @@ import os
 # import random
 import time
 
+from whitelist import whitelist
+from notify import notify
 # from keep_alive import keep_alive
 
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-
-pingStart = "@"
 
 scopes = [
     'https://www.googleapis.com/auth/spreadsheets',
@@ -40,6 +40,7 @@ lastMessageFromBot = ""
 
 msg2ago = ""
 msg1ago = ""
+pingStart = "@"
 
 
 @client.event
@@ -50,6 +51,16 @@ async def on_ready():
 @client.event
 async def on_message(message):
     message_lower = message.content.lower()
+
+    # runs the code for messages in channels called "Usernames"
+    if message.channel == "Usernames":
+        # runs the code for the Whitelist command
+        if message_lower.startswith("!meeplebot whitelist"):
+            await message.channel.send(whitelist(message, sheet))
+
+        # runs the code for the Notify command
+        if message_lower.startswith("!meeplebot notify"):
+            await message.channel.send(notify(message, sheet))
 
 
 client.run(os.environ['TOKEN'])
