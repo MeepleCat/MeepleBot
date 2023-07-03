@@ -8,6 +8,7 @@ from discord import HTTPException
 from whitelist import whitelist
 from notify import notify
 from whitelist_instructions import whitelist_instructions
+from claimed_numbers import claimed_numbers
 # from keep_alive import keep_alive
 
 import gspread
@@ -56,16 +57,20 @@ async def on_ready():
 async def on_message(message):
     message_lower = message.content.lower()
 
+    # prints the message and it's details to the console
+    print(f"----------\nserver: {message.guild}\nchannel: {message.channel}\nauthor: {message.author}\ncontent: "
+          f"{message.content}")
+
     # determines the previous messages
     global previousMessages
-    for i in range(10):
-        previousMessages[10-i] = previousMessages[9-i]
+    for i in range(9):
+        previousMessages[9-i] = previousMessages[8-i]
     previousMessages[0] = message
 
     if message.author == client.user:
         return
 
-    # runs the code for messages in channels called "Usernames"
+    # runs the code for messages in channels called "usernames"
     if message.channel == "Usernames":
         # runs the code for the Whitelist command
         if message_lower.startswith("!meeplebot whitelist"):
@@ -73,12 +78,19 @@ async def on_message(message):
 
         # runs the code for the Notify command
         if message_lower.startswith("!meeplebot notify"):
-            await message.channel.send(notify(message, sheet))
+            global pingStart
+            await message.channel.send(notify(sheet, pingStart))
 
         # reposts the instructions message
         try:
             await message.channel.send(whitelist_instructions(previousMessages))
         except HTTPException:
             return
+
+    # runs the code for messages in channels called "packager-numbers"
+    if str(message.channel) == "packager-numbers":
+        # shows the claimed numbers
+        if message_lower.startswith("!meeplebot claimed numbers"):
+            await message.channel.send(claimed_numbers(sheet))
 
 client.run(os.environ['TOKEN'])

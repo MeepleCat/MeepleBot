@@ -1,8 +1,7 @@
-from main import pingStart
 from get_column import get_column
 
 
-def notify(message, sheet):
+def notify(sheet, ping_start):
     number_of_users = int(sheet.acell("K1").value) + 1
     people_to_notify = []
 
@@ -25,7 +24,7 @@ def notify(message, sheet):
         if column_f[i] == "yes":
             if column_i[i] == "no":
                 print(f"The user in row {i} has not been whitelisted.")
-                people_to_notify.append(f"<{pingStart}{ids[i]}")
+                people_to_notify.append(f"<{ping_start}{ids[i]}")
                 sheet.update_acell(f"I{i + 2}", "yes")
                 times_whitelisted = int(sheet.acell(f"G{i + 2}").value) + 1
                 sheet.update_acell(f"G{i + 2}", times_whitelisted)
