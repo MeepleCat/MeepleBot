@@ -1,7 +1,14 @@
+from get_column import get_column
+
+
 def claim_number(message, sheet):
-    number_of_users = int(sheet.acell("K1").value) + 1
+    number_of_users = int(sheet.acell("K1").value)
     number = [char for char in message.content]
     number_found = False
+
+    column_c = get_column("C", sheet, "digit")
+    column_d = get_column("D", sheet, "digit")
+
     while not number_found:
         if not number[0].isdigit():
             del (number[0])
@@ -14,12 +21,12 @@ def claim_number(message, sheet):
     for i in range(len(temp)):
         number = number + temp[i]
 
-    claimed_numbers = sheet.get(f"E2:E{number_of_users + 1}")
+    claimed_numbers = sheet.get(f"E2:E{number_of_users}")
     print(f"number {number}")
 
     number_claimed = False
     for i in range(len(claimed_numbers)):
-        temp1b = [char for char in claimed_numbers[i]]
+        temp1b = [char for char in str(claimed_numbers[i])]
         temp1 = temp1b[0]
         print(f"temp1 {temp1}")
         temp2 = ""
@@ -43,16 +50,16 @@ def claim_number(message, sheet):
     exists_in_list = False
     user_row = 0
     for i in range(number_of_users):
-        temp_id = str(sheet.acell(f"C{i + 1}").value + sheet.acell(f"D{i + 1}").value)
+        temp_id = str(column_c[i] + column_d[i])
         if temp_id == user_id:
             exists_in_list = True
             print("found the user in the spreadsheet")
-            user_row = i + 1
+            user_row = i + 2
 
     if not number_claimed and exists_in_list:
         sheet.update_acell(f"E{user_row}", number)
         return f"You have successfully claimed {number} as your rocket ID#."
     elif number_claimed:
-        "The number you tried to claim has already been claimed. Please try again with a different number."
+        return "The number you tried to claim has already been claimed. Please try again with a different number."
     elif not exists_in_list:
-        "You must submit your username in the usernames channel before you can claim a packager number."
+        return "You must submit your username in the usernames channel before you can claim a packager number."

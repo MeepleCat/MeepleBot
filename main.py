@@ -1,7 +1,5 @@
 import discord
 import os
-# import random
-import time
 
 from discord import HTTPException
 
@@ -9,7 +7,8 @@ from whitelist import whitelist
 from notify import notify
 from whitelist_instructions import whitelist_instructions
 from claimed_numbers import claimed_numbers
-# from keep_alive import keep_alive
+from claim_number import claim_number
+from packager_instructions import packager_instructions
 
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
@@ -32,18 +31,6 @@ intents.message_content = True
 
 client = discord.Client(intents=intents)
 
-ignoredServers = []
-
-timeStartedB = time.ctime()
-timeStarted = time.time()
-messagesSent = 0
-timesSomeoneHasSaidArk = 0
-timesSomeoneHasScreamedAtBot = 0
-lastTimeSomeoneSaidArk = 0
-lastMessageFromBot = ""
-
-msg2ago = ""
-msg1ago = ""
 pingStart = "@"
 previousMessages = ["", "", "", "", "", "", "", "", "", ""]
 
@@ -51,6 +38,7 @@ previousMessages = ["", "", "", "", "", "", "", "", "", ""]
 @client.event
 async def on_ready():
     print("We have logged in as {0.user}".format(client))
+    global previousMessages
 
 
 @client.event
@@ -65,15 +53,16 @@ async def on_message(message):
     global previousMessages
     for i in range(9):
         previousMessages[9-i] = previousMessages[8-i]
-    previousMessages[0] = message
+    previousMessages[0] = message.content
 
     if message.author == client.user:
         return
 
     # runs the code for messages in channels called "usernames"
-    if message.channel == "Usernames":
+    if str(message.channel) == "usernames":
         # runs the code for the Whitelist command
         if message_lower.startswith("!meeplebot whitelist"):
+            print(99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999)
             await message.channel.send(whitelist(message, sheet))
 
         # runs the code for the Notify command
@@ -93,4 +82,13 @@ async def on_message(message):
         if message_lower.startswith("!meeplebot claimed numbers"):
             await message.channel.send(claimed_numbers(sheet))
 
+        # allows the user to claim a number
+        if message_lower.startswith("!meeplebot claim number"):
+            await message.channel.send(claim_number(message, sheet))
+
+        # reposts the instructions message
+        try:
+            await message.channel.send(packager_instructions(previousMessages))
+        except HTTPException:
+            return
 client.run(os.environ['TOKEN'])
