@@ -2,7 +2,7 @@ from get_column import get_column
 
 
 def claim_number(message, sheet):
-    number_of_users = int(sheet.acell("K1").value)
+    number_of_users = int(sheet.acell("L1").value)
     number = [char for char in message.content]
     number_found = False
 
@@ -21,7 +21,7 @@ def claim_number(message, sheet):
     for i in range(len(temp)):
         number = number + temp[i]
 
-    claimed_numbers = sheet.get(f"E2:E{number_of_users}")
+    claimed_numbers = sheet.get(f"F2:F{number_of_users}")
     print(f"number {number}")
 
     number_claimed = False

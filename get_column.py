@@ -1,5 +1,5 @@
 def get_column(column, sheet, mode):
-    number_of_users = int(sheet.acell("K1").value)
+    number_of_users = int(sheet.acell("L1").value)
     temp_column = sheet.get(f"{column}2:{column}{number_of_users + 1}")
 
     if mode == "alpha":
