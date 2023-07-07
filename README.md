@@ -20,3 +20,7 @@ Currently the bot only works on one server but might eventually be expanded to w
     * Stops all future commands from the server from being processed.
 * !MeepleBot unignore
     * Undos the effects of !MeepleBot ignore
+* !MeepleBot claim number {NUMBER}
+    * Allows the user to claim an unique number
+* !MeepleBot claimed numbers
+    * Shows the currently claimed numbers
