@@ -1,7 +1,7 @@
 from get_column import get_column
 
 
-def notify(sheet, ping_start):
+def notify_func(sheet, ping_start):
     number_of_users = int(sheet.acell("L1").value)
     people_to_notify = []
 

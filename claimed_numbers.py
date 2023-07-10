@@ -1,7 +1,7 @@
 from get_column import get_column
 
 
-def claimed_numbers(sheet):
+def claimed_numbers_func(sheet):
     number_of_users = int(sheet.acell("L1").value)
     numbers = []
 

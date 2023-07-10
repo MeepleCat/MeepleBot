@@ -2,13 +2,15 @@ import discord
 import os
 
 from discord import HTTPException
+from discord import app_commands
+from discord.ext import commands
 
-from whitelist import whitelist
-from change_username import change_username
-from notify import notify
+from whitelist import whitelist_func
+from change_username import change_username_func
+from notify import notify_func
 from whitelist_instructions import whitelist_instructions
-from claimed_numbers import claimed_numbers
-from claim_number import claim_number
+from claimed_numbers import claimed_numbers_func
+from claim_number import claim_number_func
 from packager_instructions import packager_instructions
 from keep_alive import keep_alive
 
@@ -28,10 +30,7 @@ sheet = file.open("ConquistadorsWhitelist")
 # open sheet
 sheet = sheet.sheet1
 
-intents = discord.Intents.all()
-intents.message_content = True
-
-client = discord.Client(intents=intents)
+client = commands.Bot(command_prefix="!", intents=discord.Intents.all())
 
 pingStart = "@"
 previousMessagesUsernames = ["", "", "", "", "", "", "", "", "", ""]
@@ -41,10 +40,50 @@ previousMessagesPackagerNumbers = ["", "", "", "", "", "", "", "", "", ""]
 @client.event
 async def on_ready():
     print("We have logged in as {0.user}".format(client))
+    try:
+        synced = await client.tree.sync()
+        print(f"Synced {len(synced)} commands(s)")
+    except Exception as e:
+        print(e)
+
+
+@client.tree.command(name="whitelist")
+@app_commands.describe(username="username")
+async def whitelist(interaction: discord.Interaction, username: str):
+    await interaction.response.send_message(whitelist_func(interaction, username, sheet), ephemeral=False)
+
+
+@client.tree.command(name="change_username")
+@app_commands.describe(new_username="new username")
+async def change_username(interaction: discord.Interaction, new_username: str):
+    await interaction.response.send_message(change_username_func(interaction, new_username, sheet))
+
+
+@client.tree.command(name="notify")
+async def notify(interaction: discord.Interaction):
+    await interaction.response.send_message(notify_func(sheet, pingStart), ephemeral=False)
+
+
+@client.tree.command(name="claimed_numbers")
+async def claimed_numbers(interaction: discord.Interaction):
+    await interaction.response.send_message(claimed_numbers_func(sheet))
+
+
+@client.tree.command(name="claim_number")
+@app_commands.describe(shuttle="# of packagers to put on shuttle", thruster="# of packagers to put on thruster")
+async def claim_number(interaction: discord.Interaction, shuttle: int, thruster: int):
+    await interaction.response.send_message(claim_number_func(interaction, shuttle, thruster, sheet))
+
+
+@client.tree.command(name="random")
+async def random(interaction: discord.Interaction):
+    import random
+    await interaction.response.send_message(random.randint(0, 1000000))
 
 
 @client.event
 async def on_message(message):
+    return
     message_lower = message.content.lower()
 
     # prints the message and it's details to the console
