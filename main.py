@@ -50,8 +50,10 @@ async def on_ready():
 @client.tree.command(name="whitelist")
 @app_commands.describe(username="username")
 async def whitelist(interaction: discord.Interaction, username: str):
-    await interaction.response.send_message(whitelist_func(interaction, username, sheet), ephemeral=False)
-
+    await interaction.response.send_message("Thinking...")
+    await interaction.channel.send(whitelist_func(interaction, username, sheet))
+    await interaction.edit_original_response(content="Done!")
+    
 
 @client.tree.command(name="change_username")
 @app_commands.describe(new_username="new username")
