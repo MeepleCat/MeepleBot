@@ -61,7 +61,9 @@ async def change_username(interaction: discord.Interaction, new_username: str):
 
 @client.tree.command(name="notify")
 async def notify(interaction: discord.Interaction):
-    await interaction.response.send_message(notify_func(sheet, pingStart), ephemeral=False)
+    await interaction.response.send_message("Thinking...")
+    await interaction.channel.send(notify_func(sheet, pingStart))
+    await interaction.edit_original_response(content="Done!")
 
 
 @client.tree.command(name="claimed_numbers")
