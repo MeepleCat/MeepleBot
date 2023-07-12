@@ -83,6 +83,11 @@ async def random(interaction: discord.Interaction):
     await interaction.response.send_message(random.randint(0, 1000000))
 
 
+@client.tree.command(name="help")
+async def help(interaction: discord.Interaction):
+    await interaction.response.send_message("## List of commands (all commands start with the \/ prefix):\n### whitelist: adds your username to the queue.\n### change_username: changes the username recored.\n### claim_number: allows you to claim a packager number to put on your rocket and thruster.\n### claimed_numbers: shows the claimed packager numbers.")
+
+
 @client.event
 async def on_message(message):
     return
