@@ -430,3 +430,66 @@ from whitelist import whitelist
 
 keep_alive()
 client.run(os.environ['TOKEN'])
+
+
+#################################################
+# OTHER OLD CODE
+#################################################
+
+@client.event
+async def on_message(message):
+    return
+    message_lower = message.content.lower()
+
+    # prints the message and it's details to the console
+    print(f"----------\nserver: {message.guild}\nchannel: {message.channel}\nauthor: {message.author}\ncontent: "
+          f"{message.content}")
+
+    # runs the code for messages in channels called "usernames"
+    if str(message.channel) == "usernames":
+        # determines the previous messages in the "usernames" channel
+        global previousMessagesUsernames
+        for i in range(9):
+            previousMessagesUsernames[9 - i] = previousMessagesUsernames[8 - i]
+        previousMessagesUsernames[0] = message.content
+
+        # runs the code for the Whitelist command
+        if message_lower.startswith("!meeplebot whitelist"):
+            await message.channel.send(whitelist(message, sheet))
+
+        # runs the code to allow the user to change their username
+        if message_lower.startswith("!meeplebot change username"):
+            await message.channel.send(change_username(message, sheet))
+
+        # runs the code for the Notify command
+        if message_lower.startswith("!meeplebot notify"):
+            global pingStart
+            await message.channel.send(notify(sheet, pingStart))
+
+        # reposts the instructions message
+        try:
+            await message.channel.send(whitelist_instructions(previousMessagesUsernames))
+        except HTTPException:
+            return
+
+    # runs the code for messages in channels called "packager-numbers"
+    if str(message.channel) == "packager-numbers":
+        # determines the previous messages in the "packager-numbers" channel
+        global previousMessagesPackagerNumbers
+        for i in range(9):
+            previousMessagesPackagerNumbers[9 - i] = previousMessagesPackagerNumbers[8 - i]
+        previousMessagesPackagerNumbers[0] = message.content
+
+        # shows the claimed numbers
+        if message_lower.startswith("!meeplebot claimed numbers"):
+            await message.channel.send(claimed_numbers(sheet))
+
+        # allows the user to claim a number
+        if message_lower.startswith("!meeplebot claim number"):
+            await message.channel.send(claim_number(message, sheet))
+
+        # reposts the instructions message
+        try:
+            await message.channel.send(packager_instructions(previousMessagesPackagerNumbers))
+        except HTTPException:
+            return

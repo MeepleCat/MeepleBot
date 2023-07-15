@@ -5,6 +5,7 @@ from discord import HTTPException
 from discord import app_commands
 from discord.ext import commands
 
+from determine_sheet import determine_sheet
 from whitelist import whitelist_func
 from change_username import change_username_func
 from notify import notify_func
@@ -26,9 +27,15 @@ credentials = ServiceAccountCredentials.from_json_keyfile_name("Google_Account.j
 
 file = gspread.authorize(credentials)
 # authenticate the JSON key with gspread
-sheet = file.open("ConquistadorsWhitelist")
-# open sheet
-sheet = sheet.sheet1
+
+testingSheet = file.open("TestingSpreadsheet")
+testingSheet = testingSheet.sheet1
+
+conquistadorsSheet = file.open("ConquistadorsWhitelist")
+conquistadorsSheet = conquistadorsSheet.sheet1
+
+lilUniverseSheet = file.open("LilUniverseWhitelist")
+lilUniverseSheet = lilUniverseSheet.sheet1
 
 client = commands.Bot(command_prefix="!", intents=discord.Intents.all())
 
@@ -50,31 +57,44 @@ async def on_ready():
 @client.tree.command(name="whitelist")
 @app_commands.describe(username="username")
 async def whitelist(interaction: discord.Interaction, username: str):
-    await interaction.response.send_message(whitelist_func(interaction, username, sheet), ephemeral=False)
+    await interaction.response.send_message("Thinking...")
+    sheet = determine_sheet(interaction, testingSheet, conquistadorsSheet, lilUniverseSheet)
+    await interaction.channel.send(whitelist_func(interaction, username, sheet))
+    await interaction.edit_original_response(content="Done!")
 
 
 @client.tree.command(name="change_username")
 @app_commands.describe(new_username="new username")
 async def change_username(interaction: discord.Interaction, new_username: str):
-    await interaction.response.send_message(change_username_func(interaction, new_username, sheet))
+    await interaction.response.send_message("Thinking...")
+    sheet = determine_sheet(interaction, testingSheet, conquistadorsSheet, lilUniverseSheet)
+    await interaction.channel.send(change_username_func(interaction, new_username, sheet))
+    await interaction.edit_original_response(content="Done!")
 
 
 @client.tree.command(name="notify")
 async def notify(interaction: discord.Interaction):
     await interaction.response.send_message("Thinking...")
+    sheet = determine_sheet(interaction, testingSheet, conquistadorsSheet, lilUniverseSheet)
     await interaction.channel.send(notify_func(sheet, pingStart))
     await interaction.edit_original_response(content="Done!")
 
 
 @client.tree.command(name="claimed_numbers")
 async def claimed_numbers(interaction: discord.Interaction):
-    await interaction.response.send_message(claimed_numbers_func(sheet))
+    await interaction.response.send_message("Thinking...")
+    sheet = determine_sheet(interaction, testingSheet, conquistadorsSheet, lilUniverseSheet)
+    await interaction.channel.send(claimed_numbers_func(sheet))
+    await interaction.edit_original_response(content="Done!")
 
 
 @client.tree.command(name="claim_number")
 @app_commands.describe(shuttle="# of packagers to put on shuttle", thruster="# of packagers to put on thruster")
 async def claim_number(interaction: discord.Interaction, shuttle: int, thruster: int):
-    await interaction.response.send_message(claim_number_func(interaction, shuttle, thruster, sheet))
+    await interaction.response.send_message("Thinking...")
+    sheet = determine_sheet(interaction, testingSheet, conquistadorsSheet, lilUniverseSheet)
+    await interaction.channel.send(claim_number_func(interaction, shuttle, thruster, sheet))
+    await interaction.edit_original_response(content="Done!")
 
 
 @client.tree.command(name="random")
@@ -83,63 +103,10 @@ async def random(interaction: discord.Interaction):
     await interaction.response.send_message(random.randint(0, 1000000))
 
 
-@client.event
-async def on_message(message):
-    return
-    message_lower = message.content.lower()
+@client.tree.command(name="express_rage")
+async def express_rage(interaction: discord.Interaction):
+    await interaction.response.send_message("**I am going to implode.**")
 
-    # prints the message and it's details to the console
-    print(f"----------\nserver: {message.guild}\nchannel: {message.channel}\nauthor: {message.author}\ncontent: "
-          f"{message.content}")
-
-    # runs the code for messages in channels called "usernames"
-    if str(message.channel) == "usernames":
-        # determines the previous messages in the "usernames" channel
-        global previousMessagesUsernames
-        for i in range(9):
-            previousMessagesUsernames[9 - i] = previousMessagesUsernames[8 - i]
-        previousMessagesUsernames[0] = message.content
-
-        # runs the code for the Whitelist command
-        if message_lower.startswith("!meeplebot whitelist"):
-            await message.channel.send(whitelist(message, sheet))
-
-        # runs the code to allow the user to change their username
-        if message_lower.startswith("!meeplebot change username"):
-            await message.channel.send(change_username(message, sheet))
-
-        # runs the code for the Notify command
-        if message_lower.startswith("!meeplebot notify"):
-            global pingStart
-            await message.channel.send(notify(sheet, pingStart))
-
-        # reposts the instructions message
-        try:
-            await message.channel.send(whitelist_instructions(previousMessagesUsernames))
-        except HTTPException:
-            return
-
-    # runs the code for messages in channels called "packager-numbers"
-    if str(message.channel) == "packager-numbers":
-        # determines the previous messages in the "packager-numbers" channel
-        global previousMessagesPackagerNumbers
-        for i in range(9):
-            previousMessagesPackagerNumbers[9 - i] = previousMessagesPackagerNumbers[8 - i]
-        previousMessagesPackagerNumbers[0] = message.content
-
-        # shows the claimed numbers
-        if message_lower.startswith("!meeplebot claimed numbers"):
-            await message.channel.send(claimed_numbers(sheet))
-
-        # allows the user to claim a number
-        if message_lower.startswith("!meeplebot claim number"):
-            await message.channel.send(claim_number(message, sheet))
-
-        # reposts the instructions message
-        try:
-            await message.channel.send(packager_instructions(previousMessagesPackagerNumbers))
-        except HTTPException:
-            return
 
 keep_alive()
 client.run(os.environ['TOKEN'])
