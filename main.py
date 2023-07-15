@@ -1,7 +1,7 @@
 import discord
 import os
 
-from discord import HTTPException
+# from discord import HTTPException
 from discord import app_commands
 from discord.ext import commands
 
@@ -9,10 +9,10 @@ from determine_sheet import determine_sheet
 from whitelist import whitelist_func
 from change_username import change_username_func
 from notify import notify_func
-from whitelist_instructions import whitelist_instructions
+# from whitelist_instructions import whitelist_instructions
 from claimed_numbers import claimed_numbers_func
 from claim_number import claim_number_func
-from packager_instructions import packager_instructions
+# from packager_instructions import packager_instructions
 from keep_alive import keep_alive
 
 import gspread
@@ -106,6 +106,15 @@ async def random(interaction: discord.Interaction):
 @client.tree.command(name="express_rage")
 async def express_rage(interaction: discord.Interaction):
     await interaction.response.send_message("**I am going to implode.**")
+
+
+@client.tree.command(name="bot_help")
+async def bot_help(interaction: discord.Interaction):
+    await interaction.response.send_message("## List of commands (all commands start with the / prefix):\n### "
+                                            "whitelist: adds your username to the queue.\n### change_username: "
+                                            "changes the username recorded.\n### claim_number: allows you to claim a "
+                                            "packager number to put on your rocket and thruster.\n### claimed_"
+                                            "numbers: shows the claimed packager numbers.")
 
 
 keep_alive()
