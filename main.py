@@ -37,7 +37,7 @@ conquistadorsSheet = conquistadorsSheet.sheet1
 lilUniverseSheet = file.open("LilUniverseWhitelist")
 lilUniverseSheet = lilUniverseSheet.sheet1
 
-client = commands.Bot(command_prefix="!", intents=discord.Intents.all())
+client = commands.Bot(command_prefix="/", intents=discord.Intents.all())
 
 pingStart = "@"
 previousMessagesUsernames = ["", "", "", "", "", "", "", "", "", ""]
