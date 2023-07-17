@@ -1,4 +1,6 @@
 import discord
+from discord import *
+
 import os
 # import asyncio
 # from discord import HTTPException
@@ -6,6 +8,7 @@ from discord import app_commands
 from discord.ext import commands
 from discord import Embed
 from discord import Color
+
 from determine_sheet import determine_sheet
 from whitelist import whitelist_func
 from change_username import change_username_func
@@ -16,6 +19,7 @@ from claimed_numbers import claimed_numbers_func
 from claim_number import claim_number_func
 # from packager_instructions import packager_instructions
 from keep_alive import keep_alive
+
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
@@ -97,12 +101,45 @@ async def claim_number(interaction: discord.Interaction, shuttle: int, thruster:
 @client.tree.command(name="random")
 async def random(interaction: discord.Interaction):
     import random
-    await interaction.response.send_message(random.randint(0, 1000000))
+    embed = Embed(
+    description=random.randint(0, 1000000),
+    color = colour.Color.from_rgb(0, 255, 0)
+    )
+
+    await interaction.response.send_message(embed=embed)
+
+
+@client.tree.command(name="make_an_embed_of_color")
+@app_commands.describe(r="red value: ", g="green value: ", b="blue value: ")
+async def make_an_embed_of_color(interaction: discord.Interaction, r: int, g: int, b: int):
+    embed = Embed(
+    description="Here is the color you wanted!",
+    color = colour.Color.from_rgb(r, g, b)
+    )
+
+    await interaction.response.send_message(embed=embed)
 
 
 @client.tree.command(name="express_rage")
 async def express_rage(interaction: discord.Interaction):
     await interaction.response.send_message("**I am going to implode.**")
+
+
+@client.tree.command(name="create_ticket")
+async def create_ticket(interaction: discord.Interaction):
+    import random
+    ticketCategory = client.get_channel(1130601203223502849) 
+    newChannel = await interaction.guild.create_text_channel(name=f"Ticket_#{random.randint(0,1000000000)}", category=ticketCategory)
+    await interaction.response.send_message("Done!")
+
+
+@client.tree.command(name="close_channel")
+async def close_channel(interaction: discord.Interaction):
+    has_permission = 859811173402673172 == interaction.user.id
+    if has_permission:
+        await interaction.channel.delete()
+    else:
+        await interaction.response.send_message("lol no")
 
 
 @client.tree.command(name="bot_help")
