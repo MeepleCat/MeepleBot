@@ -80,7 +80,8 @@ async def notify(interaction: discord.Interaction):
     await interaction.response.defer()
     sheet = determine_sheet(interaction, testingSheet, conquistadorsSheet, lilUniverseSheet)
     await interaction.followup.send(embed=notify_func(sheet, pingStart))
-    await interaction.channel.send(pingWhitelisted())
+    if (not pingWhitelisted() == ""):
+        await interaction.channel.send(pingWhitelisted())
 
 
 @client.tree.command(name="claimed_numbers")
