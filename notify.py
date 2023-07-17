@@ -1,6 +1,7 @@
 from get_column import get_column
 from discord import *
 
+
 def notify_func(sheet, ping_start):
     global number_of_users 
     number_of_users = int(sheet.acell("L1").value)
@@ -79,6 +80,8 @@ def notify_func(sheet, ping_start):
             color=colour.Color.green()
         )
         return embed
+
+
 def pingWhitelisted():
     pinged = ""
     for i in range(len(people_to_notify)):
