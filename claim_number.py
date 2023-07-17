@@ -1,5 +1,5 @@
 from get_column import get_column
-
+from discord import *
 
 def claim_number_func(interaction, shuttle, thruster, sheet):
     number_of_users = int(sheet.acell("L1").value)
@@ -29,8 +29,23 @@ def claim_number_func(interaction, shuttle, thruster, sheet):
 
     if not number_claimed and exists_in_list:
         sheet.update_acell(f"F{user_row}", number)
-        return f"You have successfully claimed {number} as your rocket ID#."
+        embed = Embed(
+            title="Claimed number",
+            description=f"You have successfully claimed {number} as your rocket ID#.",
+            color=colour.Color.green()
+        )
+        return embed
     elif number_claimed:
-        return "The number you tried to claim has already been claimed. Please try again with a different number."
+        embed = Embed(
+            title="Number claimedf",
+            description="The number you tried to claim has already been claimed. Please try again with a different number.",
+            color=colour.Color.red()
+        )
+        return embed
     elif not exists_in_list:
-        return "You must submit your username in the usernames channel before you can claim a packager number."
+        embed = Embed(
+            title="Not registered",
+            description="You must submit your username in the usernames channel before you can claim a packager number.",
+            color=colour.Color.red()
+        )
+        return embed

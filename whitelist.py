@@ -1,5 +1,6 @@
 import time
 from get_column import get_column
+from discord import *
 
 
 def whitelist_func(interaction, username, sheet):
@@ -69,7 +70,23 @@ def whitelist_func(interaction, username, sheet):
         # fills in the row saying that the user has not received the "Player" role
         sheet.update_acell(f"K{number_of_users + 1}", "no")
 
-        return f"Welcome to the server, {str(interaction.user)}!\nA mod will whitelist you within a few hours or days."
+        # return f"Welcome to the server, {str(interaction.user)}!\nA mod will whitelist you within a few hours or days."
+        
+        embed = Embed(
+            title="Whitelist Pending",
+            description=f"Welcome to the server, {str(interaction.user)}!\nA mod will whitelist you within a few hours or days.",
+            color=colour.Color.green()
+        )
+        return embed
 
     if found_user:
-        return "Your username has already been recorded. It does not need to be recorded again."
+        embed = Embed(
+            title="No need!",
+            description="Your username has already been recorded. It does not need to be recorded again.",
+            color=colour.Color.red()
+        )
+        return embed
+
+
+# createEmbed("Whitelist pending", f"Welcome to the server, {str(interaction.user)}!\nA mod will whitelist you within a few hours or days.", "Green")
+# createEmbed("No need!", "Your username has already been recorded. It does not need to be recorded again.", "Green")
