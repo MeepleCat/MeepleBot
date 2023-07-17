@@ -17,8 +17,6 @@ from claim_number import claim_number_func
 from keep_alive import keep_alive
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-from dotenv import load_dotenv
-load_dotenv()
 
 scopes = [
     'https://www.googleapis.com/auth/spreadsheets',
