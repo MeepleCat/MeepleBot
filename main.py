@@ -79,10 +79,14 @@ async def change_username(interaction: discord.Interaction, new_username: str):
 async def notify(interaction: discord.Interaction):
     await interaction.response.defer()
     sheet = determine_sheet(interaction, testingSheet, conquistadorsSheet, lilUniverseSheet)
-    await interaction.followup.send(embed=notify_func(sheet, pingStart))
-    if (not pingWhitelisted() == ""):
-        await interaction.channel.send(pingWhitelisted())
+    try:
+        await interaction.followup.send(embed=notify_func(sheet, pingStart))
+        if (not pingWhitelisted() == ""):
+            await interaction.channel.send(pingWhitelisted())
+    except:
+        interaction.followup.send("API is overloaded!!")
 
+    
 
 @client.tree.command(name="claimed_numbers")
 async def claimed_numbers(interaction: discord.Interaction):
