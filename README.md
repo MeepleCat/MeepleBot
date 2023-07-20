@@ -1,8 +1,5 @@
 ## MeepleBot
 
-### Usage
-All rights are reserved by MeepleCat, the author of this software. You do not have the right to distribute, copy, or modify any part of this software.
-
 ### Summary
 MeepleBot is a discord bot designed to facilitate the whitelisting of players on multiplayer servers through google sheets integration.
 Currently the bot only works on one server but might eventually be expanded to work on others.
