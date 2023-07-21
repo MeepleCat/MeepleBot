@@ -1,4 +1,4 @@
-function determine_sheet(interaction, testing_sheet, conquistadors_sheet, lil_universe_sheet) {
+export const determine_sheet = (interaction, testing_sheet, conquistadors_sheet, lil_universe_sheet) => {
     if (interaction.guild.id == 1115372571605610757) {
         return testing_sheet;
     }
@@ -9,5 +9,3 @@ function determine_sheet(interaction, testing_sheet, conquistadors_sheet, lil_un
         return lil_universe_sheet;
     }
 }
-
-module.exports = determine_sheet;

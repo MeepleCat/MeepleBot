@@ -1,11 +1,8 @@
-module.exports = number_of_users;
-
-const { google } = require("googleapis");
+import { auth } from "../main.js";
+import { google } from "googleapis";
 const sheets = google.sheets("v4");
 
-async function number_of_users(sheet) {
-    const auth = require("../index.js");
-  
+export const number_of_users = async (sheet) => {
     const response = await sheets.spreadsheets.values.get({
     auth,
     spreadsheetId: sheet,
@@ -15,5 +12,3 @@ async function number_of_users(sheet) {
   const cellValue = response.data.values[0][0];
   return cellValue;
 }
-
-module.exports = number_of_users;

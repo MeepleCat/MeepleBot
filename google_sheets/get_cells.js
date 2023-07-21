@@ -1,11 +1,8 @@
-const { ShardEvents } = require("discord.js");
-const { google } = require("googleapis");
+import { auth } from "../main.js";
+import { google } from "googleapis";
 const sheets = google.sheets("v4");
-const sheet = sheets.spreadsheets;
 
-async function get_cells(sheet, range) {
-    const auth = require("../index.js");
-
+export const get_cells = async (sheet, range) => {
     const response = await sheets.spreadsheets.values.get({
         auth,
         spreadsheetId: sheet,
@@ -14,5 +11,3 @@ async function get_cells(sheet, range) {
 
   return String(response.data.values);
 }
-
-module.exports = get_cells;
