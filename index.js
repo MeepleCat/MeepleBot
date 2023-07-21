@@ -98,11 +98,15 @@ client.on(Events.InteractionCreate, async interaction => {
 		const sheet = determine_sheet(interaction, testing_sheet, conquistadors_sheet, lil_universe_sheet);
 		await command.execute(interaction, sheet);
 	} catch (error) {
-		console.error(error);
-		if (interaction.replied || interaction.deferred) {
-			await interaction.followUp({ content: 'There was an error while executing this command!', ephemeral: true });
-		} else {
-			await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+		// console.error(error);
+		try {
+			if (interaction.replied || interaction.deferred) {
+				await interaction.followUp({ content: 'There was an error while executing this command!', ephemeral: true });
+			} else {
+				await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+			}
+		} catch (error) {
+			return;
 		}
 	}
 });
