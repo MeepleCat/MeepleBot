@@ -38,7 +38,7 @@ const client = new Client({
  
 const main = async () => {
     await client.login(process.env.token)
-    await publishCommands(commands, process.env.token, process.env.guild, client.user.id)
+    await publishCommands(commands, process.env.token, client.user.id)
 }
 
 client.on("ready", (event) => {
