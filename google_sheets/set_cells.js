@@ -1,5 +1,5 @@
 import { google } from "googleapis";
-import { auth } from "../main.js";
+import { auth } from "../index.js";
 const sheets = google.sheets("v4");
 const sheet = sheets.spreadsheets;
 

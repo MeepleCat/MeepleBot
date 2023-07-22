@@ -1,5 +1,5 @@
-import { number_of_users } from "../google_sheets/number_of_users.js";
-import { get_cells } from "../google_sheets/get_cells.js";
+import { number_of_users } from "../../google_sheets/number_of_users.js";
+import { get_cells } from "../../google_sheets/get_cells.js";
 
 export const whitelist = async (interaction, sheet) => {
     await interaction.deferReply();

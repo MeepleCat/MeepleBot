@@ -1,5 +1,5 @@
-import { number_of_users } from "../google_sheets/number_of_users.js";
-import { set_cells } from "../google_sheets/set_cells.js";
+import { number_of_users } from "../../google_sheets/number_of_users.js";
+import { set_cells } from "../../google_sheets/set_cells.js";
 
 export const test_set_column = async (interaction, sheet) => {
     await interaction.deferReply();

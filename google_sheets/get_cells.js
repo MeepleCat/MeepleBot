@@ -1,4 +1,4 @@
-import { auth } from "../main.js";
+import { auth } from "../index.js";
 import { google } from "googleapis";
 const sheets = google.sheets("v4");
 
