@@ -51,6 +51,11 @@ client.on('interactionCreate', async (interaction) => {
     if (!interaction.isChatInputCommand) {
         return;
     }
+
+    console.log("------------------------------A new command was just run:");
+    console.log(`-----Command:\n----------${interaction.commandName}`);
+    console.log(`-----Author:\n----------${interaction.user}`);
+
     switch(interaction.commandName) {
         case "ping": {
             ping(interaction);

@@ -9,6 +9,10 @@ export const number_of_users = async (sheet) => {
     range: "Sheet1!I2",
   });
 
-  const cellValue = response.data.values[0][0];
+  try {
+    const cellValue = response.data.values[0][0];
+  } catch (error) {
+    return 0;
+  }
   return cellValue;
 }
