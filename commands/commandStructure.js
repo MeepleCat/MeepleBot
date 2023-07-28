@@ -24,6 +24,11 @@ export const commands = [
         ]
     },
     {
+        name: "claimed_numbers",
+        description: "Lists the claimed numbers",
+        type: 1,
+    },
+    {
         name: "ping",
         description: "Hopefully replies with pong",
         type: 1,

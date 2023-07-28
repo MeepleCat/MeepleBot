@@ -9,8 +9,10 @@ import { bot_help } from "./commands/miscellaneous/bot_help.js";
 import { determine_sheet } from "./google_sheets/determine_sheet.js";
 import { whitelist } from "./commands/whitelisting/whitelist.js";
 import { change_username } from "./commands/whitelisting/change_username.js";
+import { claimed_numbers } from "./commands/packagers/claimed_numbers.js";
 import { test_get_column } from "./commands/miscellaneous/test_get_column.js";
 import { test_set_column } from "./commands/miscellaneous/test_set_column.js";
+import { testing } from "googleapis/build/src/apis/testing/index.js";
 
 configDotenv();
 
@@ -70,8 +72,12 @@ client.on('interactionCreate', async (interaction) => {
             whitelist(interaction, determine_sheet(interaction, testing_sheet, conquistadors_sheet, lil_universe_sheet));
             break
         }
-        case "change_username":{
+        case "change_username": {
             change_username(interaction, determine_sheet(interaction, testing_sheet, conquistadors_sheet, lil_universe_sheet));
+            break
+        }
+        case "claimed_numbers": {
+            claimed_numbers(interaction, determine_sheet(interaction, testing_sheet, conquistadors_sheet, lil_universe_sheet));
             break
         }
         case "test_get_column": {
