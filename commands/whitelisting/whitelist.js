@@ -5,7 +5,7 @@ import { set_cells } from "../../google_sheets/set_cells.js";
 export const whitelist = async (interaction, sheet) => {
     await interaction.deferReply();
 
-    let users = await number_of_users(sheet);
+    let users = parseInt(await number_of_users(sheet));
     let user_ids = (await get_cells(sheet, `Sheet1!C2:C${users+1}`)).split(",");
     
     console.log(`-----author_id\n----------${"#"+interaction.user.id}`);
@@ -13,10 +13,7 @@ export const whitelist = async (interaction, sheet) => {
     
     let user_in_sheet = false;
 
-    for(var i = 0; i < parseInt(users); i++) {
-        console.log(`user_id: ${user_ids[i]}, author_id: ${interaction.user.id}`);
-        
-        console.log(user_ids[i] == "#"+interaction.user.id);
+    for(var i = 0; i < parseInt(users); i++) {        
         if(user_ids[i] === "#"+interaction.user.id) {
             user_in_sheet = true;
         };
