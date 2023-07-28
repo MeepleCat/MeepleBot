@@ -8,6 +8,7 @@ import { ping } from "./commands/miscellaneous/ping.js";
 import { bot_help } from "./commands/miscellaneous/bot_help.js";
 import { determine_sheet } from "./google_sheets/determine_sheet.js";
 import { whitelist } from "./commands/whitelisting/whitelist.js";
+import { change_username } from "./commands/whitelisting/change_username.js";
 import { test_get_column } from "./commands/miscellaneous/test_get_column.js";
 import { test_set_column } from "./commands/miscellaneous/test_set_column.js";
 
@@ -67,6 +68,10 @@ client.on('interactionCreate', async (interaction) => {
         }
         case "whitelist": {
             whitelist(interaction, determine_sheet(interaction, testing_sheet, conquistadors_sheet, lil_universe_sheet));
+            break
+        }
+        case "change_username":{
+            change_username(interaction, determine_sheet(interaction, testing_sheet, conquistadors_sheet, lil_universe_sheet));
             break
         }
         case "test_get_column": {

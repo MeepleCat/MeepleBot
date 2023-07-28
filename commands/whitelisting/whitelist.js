@@ -4,22 +4,20 @@ import { set_cells } from "../../google_sheets/set_cells.js";
 
 export const whitelist = async (interaction, sheet) => {
     await interaction.deferReply();
-    let users;
-    let user_ids;
-    let user_in_sheet;
-    users = await number_of_users(sheet);
-    user_ids = (await get_cells(sheet, `Sheet1!C2:C${users+1}`)).split(",");
+
+    let users = await number_of_users(sheet);
+    let user_ids = (await get_cells(sheet, `Sheet1!C2:C${users+1}`)).split(",");
     
     console.log(`-----author_id\n----------${"#"+interaction.user.id}`);
     console.log(`-----user_ids\n----------${user_ids}`);
     
-    user_in_sheet = false;
+    let user_in_sheet = false;
 
     for(var i = 0; i < parseInt(users); i++) {
         console.log(`user_id: ${user_ids[i]}, author_id: ${interaction.user.id}`);
         
         console.log(user_ids[i] == "#"+interaction.user.id);
-        if(user_ids[i] == "#"+interaction.user.id) {
+        if(user_ids[i] === "#"+interaction.user.id) {
             user_in_sheet = true;
         };
     };
@@ -27,6 +25,7 @@ export const whitelist = async (interaction, sheet) => {
     if(user_in_sheet) {
         await interaction.editReply("You are already registered with the bot, there is no need to re-register." +
         " If you wish to change your registered uesrname please use /change_username.");
+        return;
     }
     else {
         const range = `A${users+2}:H${users+2}`;

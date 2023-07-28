@@ -12,6 +12,18 @@ export const commands = [
         ]
     },
     {
+        name: "change_username",
+        description: "changes the username registered with the bot",
+        type: 1,
+        options: [
+            {
+                name: "new_username",
+                description: "your new username",
+                type: 3,
+            }
+        ]
+    },
+    {
         name: "ping",
         description: "Hopefully replies with pong",
         type: 1,

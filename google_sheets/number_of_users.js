@@ -10,9 +10,9 @@ export const number_of_users = async (sheet) => {
   });
 
   try {
-    const cellValue = response.data.values[0][0];
+    const cellValue = response.data.values;
+    return cellValue;
   } catch (error) {
     return 0;
   }
-  return cellValue;
 }
