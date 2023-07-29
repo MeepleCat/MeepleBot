@@ -64,7 +64,7 @@ export const notify = async (interaction, sheet) => {
         reply = reply + "you have been whitelisted.";
 
         console.log(`${people_to_notify.length} people to notify`)
-        await interaction.followUp('Notifying like an annoying bot');
+        await interaction.followUp(`${people_to_notify.length} ${people_to_notify = 1 ? 'person' : 'people' } to notify`);
         await interaction.channel.send(reply)
     }
     else {

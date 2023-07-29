@@ -16,7 +16,7 @@ import { claimed_numbers } from "./commands/packagers/claimed_numbers.js";
 configDotenv();
 
 const conquistadors_sheet = "12v9rcF2kyaADv3E5aIxCrKY84w7qCOs07EANSWWfjqA";
-const testing_sheet = "15jiM_EesRVD0tespvZjnRNQ7a7-9qJ3ZbPtNkpOm_Ho";
+const testing_sheet = "10tWsLjswwzt4nctuxZsXzE3-pfybm9HaCtiAY-KN24g";
 const lil_universe_sheet = "1X2Ipg8CvCg5yeAIrdwGcWPV8hc6H72IadP0jmFbw99k";
 const scopes = ["https://www.googleapis.com/auth/spreadsheets"];
 
@@ -65,9 +65,9 @@ client.on('interactionCreate', async (interaction) => {
         return;
     }
 
-    console.log("------------------------------A new command was just run:");
-    console.log(`-----Command:\n----------${interaction.commandName}`);
-    console.log(`-----Author:\n----------${interaction.user}`);
+    console.log("A new command was just run.");
+    console.log(`Command: /${interaction.commandName}`);
+    console.log(`Author: ${interaction.user.tag}`);
 
     switch(interaction.commandName) {
         case "ping": {

@@ -31,6 +31,11 @@ export const claim_number = async (interaction, sheet) => {
         }
     }
 
+    if (number_to_claim == "0-0") {
+        await interaction.followUp("Don't claim 0-0, come on...")
+        return
+    }
+
     if(number_found) {
         await interaction.followUp("The number you selected has already been claimed, please select a new number.");
     }
