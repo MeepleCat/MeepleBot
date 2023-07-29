@@ -10,7 +10,7 @@ export const claimed_numbers = async (interaction, sheet) => {
     let parsed_numbers = []
 
     for(var i = 0; i < users; i++) {
-        if(numbers[i] !== "N/A") {
+        if(!isNaN(parseInt(numbers[i][0]))) {
             parsed_numbers.push(`${numbers[i]}, `);
         }
     }

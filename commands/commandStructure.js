@@ -24,6 +24,11 @@ export const commands = [
         ]
     },
     {
+        name: "notify",
+        description: "notifies all the people who have been whitelisted",
+        type: 1,
+    },
+    {
         name: "claim_number",
         description: "Allows you to claim a packager number",
         type: 1, 

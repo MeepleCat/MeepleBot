@@ -5,6 +5,11 @@ import { set_cells } from "../../google_sheets/set_cells.js";
 export const change_username = async (interaction, sheet) => {
     await interaction.deferReply();
     
+    if(interaction.options.getString("new_username") === null) {
+        await interaction.editReply("One of the parameters you entered is invalid, please fix it and try again.");
+        return 0;
+    }
+
     let users = await number_of_users(sheet);
     let user_ids = (await get_cells(sheet, `Sheet1!C2:C${users+1}`)).split(",");
  
