@@ -12,8 +12,6 @@ import { change_username } from "./commands/whitelisting/change_username.js";
 import { notify } from "./commands/whitelisting/notify.js";
 import { claim_number } from "./commands/packagers/claim_number.js";
 import { claimed_numbers } from "./commands/packagers/claimed_numbers.js";
-import { test_get_column } from "./commands/miscellaneous/test_get_column.js";
-import { test_set_column } from "./commands/miscellaneous/test_set_column.js";
 
 configDotenv();
 
@@ -22,7 +20,7 @@ const testing_sheet = "15jiM_EesRVD0tespvZjnRNQ7a7-9qJ3ZbPtNkpOm_Ho";
 const lil_universe_sheet = "1X2Ipg8CvCg5yeAIrdwGcWPV8hc6H72IadP0jmFbw99k";
 const scopes = ["https://www.googleapis.com/auth/spreadsheets"];
 
-const token = process.env.token_testing;
+const token = process.env.token;
 
 import express from "express";
 const app = express();
@@ -31,8 +29,8 @@ app.get('/', (req, res) => {
   res.send('Hello. I am alive!');
 });
 
-const server = app.listen(8080, () => {
-  console.log('Server is running on http://localhost:8080/');
+const server = app.listen(5000, () => {
+  console.log('Server is running on http://localhost:5000/');
 });
 
 export const auth = new google.auth.JWT(
@@ -98,14 +96,6 @@ client.on('interactionCreate', async (interaction) => {
         }
         case "claimed_numbers": {
             claimed_numbers(interaction, determine_sheet(interaction, testing_sheet, conquistadors_sheet, lil_universe_sheet));
-            break
-        }
-        case "test_get_column": {
-            test_get_column(interaction, determine_sheet(interaction, testing_sheet, conquistadors_sheet, lil_universe_sheet));
-            break
-        }
-        case "test_set_column": {
-            test_set_column(interaction, determine_sheet(interaction, testing_sheet, conquistadors_sheet, lil_universe_sheet));
             break
         }
 
