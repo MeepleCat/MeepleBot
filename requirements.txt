@@ -1,5 +1,0 @@
-flask
-discord
-gspread
-oauth2client
-python-dotenv
