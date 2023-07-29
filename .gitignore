@@ -1,4 +1,6 @@
 
 Google_Account.json
-__pycache__
+node_modules
 .env
+.vscode/launch.json
+config.json
