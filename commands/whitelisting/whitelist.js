@@ -6,7 +6,7 @@ export const whitelist = async (interaction, sheet) => {
     await interaction.deferReply();
 
     if(interaction.options.getString("username") === null) {
-        await interaction.editReply("One of the parameters you entered is invalid, please fix it and try again.");
+        await interaction.followUp("One of the parameters you entered is invalid, please fix it and try again.");
         return 0;
     }
 
@@ -25,7 +25,7 @@ export const whitelist = async (interaction, sheet) => {
     };
 
     if(user_in_sheet) {
-        await interaction.editReply("You are already registered with the bot, there is no need to re-register." +
+        await interaction.followUp("You are already registered with the bot, there is no need to re-register." +
         " If you wish to change your registered uesrname please use /change_username.");
         return;
     }
@@ -47,6 +47,6 @@ export const whitelist = async (interaction, sheet) => {
 
         await set_cells(sheet, range, new_values);
 
-        await interaction.editReply("You have been added to the queue to be whitelisted.");
+        await interaction.followUp("You have been added to the queue to be whitelisted.");
     }
 }

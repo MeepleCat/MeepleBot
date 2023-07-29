@@ -15,5 +15,5 @@ export const claimed_numbers = async (interaction, sheet) => {
         }
     }
 
-    await interaction.editReply(`The currently claimed numbers are: ${parsed_numbers.sort()}`);
+    await interaction.followUp(`The currently claimed numbers are: ${parsed_numbers.sort()}`);
 }

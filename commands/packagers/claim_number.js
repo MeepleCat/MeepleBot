@@ -6,7 +6,7 @@ export const claim_number = async (interaction, sheet) => {
     await interaction.deferReply();
 
     if(interaction.options.getInteger("shuttle") === null || interaction.options.getInteger("thruster") === null) {
-        await interaction.editReply("One of the parameters you entered is invalid, please fix it and try again.");
+        await interaction.followUp("One of the parameters you entered is invalid, please fix it and try again.");
         return 0;
     }
 
@@ -32,10 +32,10 @@ export const claim_number = async (interaction, sheet) => {
     }
 
     if(number_found) {
-        await interaction.editReply("The number you selected has already been claimed, please select a new number.");
+        await interaction.followUp("The number you selected has already been claimed, please select a new number.");
     }
     else {
         await set_cells(sheet, `D${user_row}`, [[number_to_claim]]);
-        await interaction.editReply(`You have successfully claimed the number ${number_to_claim}.`);
+        await interaction.followUp(`You have successfully claimed the number ${number_to_claim}.`);
     }
 }

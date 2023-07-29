@@ -63,9 +63,9 @@ export const notify = async (interaction, sheet) => {
         } 
         reply = reply + "you have been whitelisted.";
 
-        await interaction.editReply(reply);
+        await interaction.followUp(reply);
     }
     else {
-        await interaction.editReply("There is no one to notify.");
+        await interaction.followUp("There is no one to notify.");
     }
 }

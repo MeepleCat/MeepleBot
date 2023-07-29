@@ -6,7 +6,7 @@ export const change_username = async (interaction, sheet) => {
     await interaction.deferReply();
     
     if(interaction.options.getString("new_username") === null) {
-        await interaction.editReply("One of the parameters you entered is invalid, please fix it and try again.");
+        await interaction.followUp("One of the parameters you entered is invalid, please fix it and try again.");
         return 0;
     }
 
@@ -29,10 +29,10 @@ export const change_username = async (interaction, sheet) => {
 
     if(user_row !== -1) {
         set_cells(sheet, `B${user_row}`, [[interaction.options.getString("new_username")]]);
-        await interaction.editReply("Your username has been updated successfully.");
+        await interaction.followUp("Your username has been updated successfully.");
         return;
     }
     else {
-        await interaction.editReply("You must be whitelisted in order to change your username.");
+        await interaction.followUp("You must be whitelisted in order to change your username.");
     };
 };
