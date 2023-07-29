@@ -4,7 +4,7 @@ import { set_cells } from "../../google_sheets/set_cells.js";
 import { people } from "googleapis/build/src/apis/people/index.js";
 
 export const notify = async (interaction, sheet) => {
-    await interaction.deferReply();
+    await interaction.deferReply({ephemeral: true});
 
     let users = parseInt(await number_of_users(sheet));
     let data = (await get_cells(sheet, `Sheet1!C2:G${users+1}`)).split(",");
@@ -63,9 +63,12 @@ export const notify = async (interaction, sheet) => {
         } 
         reply = reply + "you have been whitelisted.";
 
-        await interaction.followUp(reply);
+        console.log(`${people_to_notify.length} people to notify`)
+        await interaction.followUp('Notifying like an annoying bot');
+        await interaction.channel.send(reply)
     }
     else {
-        await interaction.followUp("There is no one to notify.");
+        console.log(people_to_notify.length)
+        await interaction.followUp({content: "There is no one to notify", ephemeral: true});
     }
 }
