@@ -8,6 +8,7 @@ export const commands = [
                 name: "username",
                 description: "Your IGN",
                 type: 3,
+                required: true,
             }
         ]
     },
@@ -20,6 +21,7 @@ export const commands = [
                 name: "new_username",
                 description: "your new username",
                 type: 3,
+                required: true,
             }
         ]
     },
@@ -37,11 +39,13 @@ export const commands = [
                 name: "shuttle",
                 description: "number of packagers to put on your shuttle",
                 type: 4,
+                required: true,
             },
             {
                 name: "thruster",
                 description: "number of packagers to put on your thruster",
                 type: 4,
+                required: true,
             }
         ]
     },
