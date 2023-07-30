@@ -11,9 +11,9 @@ export const claimed_numbers = async (interaction, sheet) => {
 
     for(var i = 0; i < users; i++) {
         if(!isNaN(parseInt(numbers[i][0]))) {
-            parsed_numbers.push(`${numbers[i]}, `);
+            parsed_numbers.push(` ${numbers[i]}`);
         }
     }
 
-    await interaction.followUp(`The currently claimed numbers are: ${parsed_numbers.sort()}`);
+    await interaction.followUp(`The currently claimed numbers are:${parsed_numbers.sort()}`);
 }
