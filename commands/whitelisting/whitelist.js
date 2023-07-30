@@ -26,7 +26,7 @@ export const whitelist = async (interaction, sheet) => {
 
     if(user_in_sheet) {
         await interaction.followUp("You are already registered with the bot, there is no need to re-register." +
-        " If you wish to change your registered uesrname please use /change_username.");
+        " If you wish to change your registered username please use /change_username.");
         return;
     }
     else {

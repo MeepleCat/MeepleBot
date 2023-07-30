@@ -4,7 +4,7 @@ const sheets = google.sheets("v4");
 const sheet = sheets.spreadsheets;
 
 export const set_cells = async (sheet, range, new_values) => {
-    const response = await sheets.spreadsheets.values.update({
+    const response = await sheets.spreadsheets.values.append({
         auth,
         spreadsheetId: sheet,
         range: range,
