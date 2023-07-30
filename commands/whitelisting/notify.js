@@ -62,13 +62,10 @@ export const notify = async (interaction, sheet) => {
             reply = reply + `<@${ids[people_to_notify[i]].replace(/\D/g, '')}>, `;
         } 
         reply = reply + "you have been whitelisted.";
-
-        console.log(`${people_to_notify.length} people to notify`)
         await interaction.followUp(`${people_to_notify.length} ${people_to_notify.length === 1 ? 'person' : 'people' } to notify`);
         await interaction.channel.send(reply)
     }
     else {
-        console.log(people_to_notify.length)
         await interaction.followUp({content: "There is no one to notify", ephemeral: true});
     }
 }
