@@ -66,9 +66,9 @@ client.on('interactionCreate', async (interaction) => {
         return;
     }
     // Logging
-    console.log("A new command was just run.");
-    console.log(`Command: /${interaction.commandName}`);
-    console.log(`Author: ${interaction.user.tag}`)
+    console.log("A new command just ran.");
+    console.log(`           Command: /${interaction.commandName}`);
+    console.log(`           Author: ${interaction.user.tag}`)
     switch(interaction.commandName) {
         case "ping": {
             ping(interaction)
