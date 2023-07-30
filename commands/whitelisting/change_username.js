@@ -12,16 +12,10 @@ export const change_username = async (interaction, sheet) => {
 
     let users = await number_of_users(sheet);
     let user_ids = (await get_cells(sheet, `Sheet1!C2:C${users+1}`)).split(",");
- 
-    console.log(`-----author_id\n----------${"#"+interaction.user.id}`);
-    console.log(`-----user_ids\n----------${user_ids}`);
 
     let user_row = -1;
 
     for(var i = 0; i < parseInt(users); i++) {
-        console.log(`user_id: ${user_ids[i]}, author_id: ${interaction.user.id}`);
-        
-        console.log(user_ids[i] == "#"+interaction.user.id);
         if(user_ids[i] === "#"+interaction.user.id) {
             user_row = i + 2
         };
