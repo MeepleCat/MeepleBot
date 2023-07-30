@@ -64,9 +64,6 @@ client.on('interactionCreate', async (interaction) => {
     if (!interaction.isChatInputCommand) {
         return;
     }
-    console.log("A new command was just run.");
-    console.log(`Command: /${interaction.commandName}`);
-    console.log(`Author: ${interaction.user.tag}`)
     switch(interaction.commandName) {
         case "ping": {
             ping(interaction);
@@ -96,7 +93,9 @@ client.on('interactionCreate', async (interaction) => {
             claimed_numbers(interaction, determine_sheet(interaction, testing_sheet, conquistadors_sheet, lil_universe_sheet));
             break
         }
-
+        console.log("A new command was just run.");
+        console.log(`Command: /${interaction.commandName}`);
+        console.log(`Author: ${interaction.user.tag}`);
     }
 })
 
