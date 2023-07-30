@@ -63,5 +63,10 @@ export const commands = [
         name: "bot_help",
         description: "Replies with a manual of all of the features of the bot",
         type: 1,
+    },
+    {
+        name: "express_rage",
+        description: "Express your rage towards the bot",
+        type: 1,
     }
 ]

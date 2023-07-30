@@ -12,6 +12,7 @@ import { change_username } from "./commands/whitelisting/change_username.js";
 import { notify } from "./commands/whitelisting/notify.js";
 import { claim_number } from "./commands/packagers/claim_number.js";
 import { claimed_numbers } from "./commands/packagers/claimed_numbers.js";
+import { express_rage } from "./commands/miscellaneous/express_rage.js";
 
 configDotenv();
 
@@ -95,6 +96,10 @@ client.on('interactionCreate', async (interaction) => {
         }
         case "claimed_numbers": {
             claimed_numbers(interaction, determine_sheet(interaction, testing_sheet, conquistadors_sheet, lil_universe_sheet));
+            break
+        }
+        case "express_rage": {
+            express_rage(interaction)
             break
         }
     }
