@@ -15,7 +15,7 @@ export const notify = async (interaction, sheet) => {
     let notified = []; 
     let times_whitelisted = [];
 
-    for(var i = 0; i < users * 5; i++) {
+    for(let i = 0; i < users * 5; i++) {
         if(i % 5 === 0) {
             ids.push(data[i]);
         }
@@ -35,7 +35,7 @@ export const notify = async (interaction, sheet) => {
 
     let people_to_notify = [];
 
-    for(var i = 0; i < users; i++) {
+    for(let i = 0; i < users; i++) {
         if(whitelisted[i] === "yes" && notified[i] === "no") {
             people_to_notify.push(i);
             notified[i] = "yes";
@@ -45,7 +45,7 @@ export const notify = async (interaction, sheet) => {
     
     if(people_to_notify.length !== 0) {
         let new_values = [];
-        for(var i = 0; i < users; i++) {
+        for(let i = 0; i < users; i++) {
             let temp = [];
             temp.push(ids[i]);
             temp.push(rocket_ids[i]);
@@ -58,13 +58,13 @@ export const notify = async (interaction, sheet) => {
         await set_cells(sheet, `Sheet1!C2:G${users+1}`, new_values);
 
         let reply = "";
-        for(var i = 0; i < people_to_notify.length; i++) {
+        for(let i = 0; i < people_to_notify.length; i++) {
             reply = reply + `<@${ids[people_to_notify[i]].replace(/\D/g, '')}>, `;
         } 
         reply = reply + "you have been whitelisted.";
 
         console.log(`${people_to_notify.length} people to notify`)
-        await interaction.followUp(`${people_to_notify.length} ${people_to_notify = 1 ? 'person' : 'people' } to notify`);
+        await interaction.followUp(`${people_to_notify.length} ${people_to_notify.length === 1 ? 'person' : 'people' } to notify`);
         await interaction.channel.send(reply)
     }
     else {
