@@ -24,6 +24,8 @@ export const change_username = async (interaction, sheet) => {
 
         if(user_row !== -1) {
             set_cells(sheet, `B${user_row}`, [[interaction.options.getString("new_username")]]);
+            set_cells(sheet, `E${user_row}`, [["no"]])
+            set_cells(sheet, `F${user_row}`, [["no"]])
             await interaction.followUp("Your username has been updated successfully.");
             return;
         }
