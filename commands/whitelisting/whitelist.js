@@ -49,7 +49,7 @@ export const whitelist = async (interaction, sheet) => {
         }
     }
     catch(err) {
-        interaction.followUp(`Fatal error. Please let the developers of the bot know.\n${err}`)
+        interaction.channel.send(`Fatal error. Please let the developers of the bot know.\n${err}`)
         console.log(`Error: ${err}`)
     }
 }
