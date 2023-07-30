@@ -64,6 +64,7 @@ client.on('interactionCreate', async (interaction) => {
     if (!interaction.isChatInputCommand) {
         return;
     }
+    // Logging
     console.log("A new command was just run.");
     console.log(`Command: /${interaction.commandName}`);
     console.log(`Author: ${interaction.user.tag}`)
