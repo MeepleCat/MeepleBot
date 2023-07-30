@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
   res.send('Hello. I am alive!');
 });
 
-const server = app.listen(5000, () => {
+app.listen(5000, () => {
   console.log('Server is running on http://localhost:5000/');
 });
 
@@ -70,7 +70,7 @@ client.on('interactionCreate', async (interaction) => {
     console.log(`Author: ${interaction.user.tag}`)
     switch(interaction.commandName) {
         case "ping": {
-            ping(interaction);
+            ping(interaction)
             break
         }
         case "bot_help": {
@@ -97,7 +97,6 @@ client.on('interactionCreate', async (interaction) => {
             claimed_numbers(interaction, determine_sheet(interaction, testing_sheet, conquistadors_sheet, lil_universe_sheet));
             break
         }
-
     }
 })
 
