@@ -1,6 +1,6 @@
 import { number_of_users } from "../../google_sheets/number_of_users.js";
 import { get_cells } from "../../google_sheets/get_cells.js";
-import { set_cells } from "../../google_sheets/set_cells.js";
+import { new_row } from "../../google_sheets/new_row.js";
 
 export const whitelist = async (interaction, sheet) => {
     await interaction.deferReply();
@@ -12,10 +12,7 @@ export const whitelist = async (interaction, sheet) => {
 
     let users = parseInt(await number_of_users(sheet));
     let user_ids = (await get_cells(sheet, `Sheet1!C2:C${users+1}`)).split(",");
-    
-    console.log(`-----author_id\n----------${"#"+interaction.user.id}`);
-    console.log(`-----user_ids\n----------${user_ids}`);
-    
+
     let user_in_sheet = false;
 
     for(var i = 0; i < parseInt(users); i++) {        
@@ -45,7 +42,7 @@ export const whitelist = async (interaction, sheet) => {
 
         new_values.push(values);
 
-        await set_cells(sheet, range, new_values);
+        await new_row(sheet, range, new_values);
 
         await interaction.followUp("You have been added to the queue to be whitelisted.");
     }

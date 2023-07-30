@@ -2,9 +2,8 @@ import { google } from "googleapis";
 import { auth } from "../index.js";
 const sheets = google.sheets("v4");
 const sheet = sheets.spreadsheets;
-
-export const set_cells = async (sheet, range, new_values) => {
-    const response = await sheets.spreadsheets.values.update({
+export const new_row = async (sheet, range, new_values) => {
+    const response = await sheets.spreadsheets.values.append({
         auth,
         spreadsheetId: sheet,
         range: range,
@@ -12,7 +11,7 @@ export const set_cells = async (sheet, range, new_values) => {
         resource: {
             values: new_values,
         },
-  });
+    });
 
-  return String(response.data.values);
+    return String(response.data.values);
 }
