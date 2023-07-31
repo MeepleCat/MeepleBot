@@ -29,21 +29,19 @@ export const whitelist = async (interaction, sheet) => {
         }
         else {
             const range = `A${users+2}:H${users+2}`;
-            let new_values = [];
-            let values = []
 
-            values.push(interaction.user.username);
-            values.push(interaction.options.getString("username"));
-            values.push("#"+interaction.user.id);
-            values.push("N/A");
-            values.push("no");
-            values.push("no");
-            values.push(0);
-            values.push(new Date().toString());
+            let values = [[
+                interaction.user.username,
+                interaction.options.getString("username"),
+                "#"+interaction.user.id,
+                "N/A",
+                "no",
+                "no",
+                0,
+                new Date().toString()
+            ]]
 
-            new_values.push(values);
-
-            await new_row(sheet, range, new_values);
+            await new_row(sheet, range, values);
 
             await interaction.followUp("You have been added to the queue to be whitelisted.");
         }
