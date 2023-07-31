@@ -14,22 +14,11 @@ export const whitelist = async (interaction, sheet) => {
         let users = parseInt(await number_of_users(sheet));
         let user_ids = (await get_cells(sheet, `Sheet1!C2:C${users+1}`)).split(",");
 
-        let user_in_sheet = false;
-
-        for(let i = 0; i < parseInt(users); i++) {
-            if(user_ids[i] === "#"+interaction.user.id) {
-                user_in_sheet = true;
-            }
-        }
-
-        if(user_in_sheet) {
+        if(user_ids.includes("#"+interaction.user.id)) {
             await interaction.followUp("You are already registered with the bot, there is no need to re-register." +
                 " If you wish to change your registered username please use /change_username.");
-            return;
-        }
-        else {
+        } else {
             const range = `A${users+2}:H${users+2}`;
-
             let values = [[
                 interaction.user.username,
                 interaction.options.getString("username"),
@@ -40,7 +29,6 @@ export const whitelist = async (interaction, sheet) => {
                 0,
                 new Date().toString()
             ]]
-
             await new_row(sheet, range, values);
 
             await interaction.followUp("You have been added to the queue to be whitelisted.");
