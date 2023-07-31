@@ -26,10 +26,8 @@ export const claim_number = async (interaction, sheet) => {
 
         let number_found = false;
 
-        for(let i = 0; i < users; i++) {
-            if (numbers[i] === number_to_claim) {
-                number_found = true;
-            }
+        if (numbers.includes(number_to_claim)) {
+            number_found = true;
         }
 
         if (number_to_claim === "0-0") {
@@ -38,7 +36,9 @@ export const claim_number = async (interaction, sheet) => {
         }
 
         if(number_found) {
+
             await interaction.followUp("The number you selected has already been claimed, please select a new number.");
+
         }
         else {
             await set_cells(sheet, `D${user_row}`, [[number_to_claim]]);
