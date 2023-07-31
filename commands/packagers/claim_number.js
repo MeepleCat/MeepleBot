@@ -6,39 +6,29 @@ export const claim_number = async (interaction, sheet) => {
     try {
         await interaction.deferReply();
 
-        if(interaction.options.getInteger("shuttle") === null || interaction.options.getInteger("thruster") === null) {
+        const shuttle = interaction.options.getInteger("shuttle");
+        const thruster = interaction.options.getInteger("thruster");
+
+        if (shuttle === null || thruster === null) {
             await interaction.followUp("One of the parameters you entered is invalid, please fix it and try again.");
             return 0;
+        }
+
+        const number_to_claim = `${shuttle}-${thruster}`;
+
+        if (number_to_claim === "0-0") {
+            await interaction.followUp("Don't claim 0-0, come on...");
+            return;
         }
 
         let users = parseInt(await number_of_users(sheet));
         let user_ids = (await get_cells(sheet, `Sheet1!C2:C${users+1}`)).split(",");
         let numbers = (await get_cells(sheet, `Sheet1!D2:D${users+1}`)).split(",");
-        const number_to_claim = `${interaction.options.getInteger("shuttle")}-${interaction.options.getInteger("thruster")}`;
 
-        let user_row = -1;
-
-        for(let i = 0; i < parseInt(users); i++) {
-            if(user_ids[i] === "#"+interaction.user.id) {
-                user_row = i + 2
-            }
-        }
-
-        let number_found = false;
+        const user_row = user_ids.findIndex(id => id === `#${interaction.user.id}`) + 2;
 
         if (numbers.includes(number_to_claim)) {
-            number_found = true;
-        }
-
-        if (number_to_claim === "0-0") {
-            await interaction.followUp("Don't claim 0-0, come on...")
-            return
-        }
-
-        if(number_found) {
-
             await interaction.followUp("The number you selected has already been claimed, please select a new number.");
-
         }
         else {
             await set_cells(sheet, `D${user_row}`, [[number_to_claim]]);
@@ -46,7 +36,7 @@ export const claim_number = async (interaction, sheet) => {
         }
     }
     catch(err) {
-        interaction.channel.send(`Fatal error. Please let the developers of the bot know.\n${err}`)
-        console.log(`Error: ${err}`)
+        interaction.channel.send(`Fatal error. Please let the developers of the bot know.\n${err}`);
+        console.log(`Error: ${err}`);
     }
 }
