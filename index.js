@@ -1,4 +1,4 @@
-import { Client, GatewayIntentBits } from "discord.js";
+import {Client, GatewayIntentBits} from "discord.js";
 import { publishCommands } from "./commands/publishCommands.js";
 import { configDotenv } from "dotenv";
 import { commands } from "./commands/commandStructure.js";
@@ -13,7 +13,7 @@ import { notify } from "./commands/whitelisting/notify.js";
 import { claim_number } from "./commands/packagers/claim_number.js";
 import { claimed_numbers } from "./commands/packagers/claimed_numbers.js";
 import { express_rage } from "./commands/miscellaneous/express_rage.js";
-
+import { diagnostics } from "./commands/miscellaneous/diagnostics.js";
 configDotenv();
 
 const conquistadors_sheet = "12v9rcF2kyaADv3E5aIxCrKY84w7qCOs07EANSWWfjqA";
@@ -34,6 +34,9 @@ app.listen(5000, () => {
   console.log('Server is running on http://localhost:5000/');
 });
 
+
+
+
 export const auth = new google.auth.JWT(
     credentials.client_email,
     null,
@@ -43,7 +46,6 @@ export const auth = new google.auth.JWT(
 
 auth.authorize().catch((err) => {
     console.log(`Authentication failed: ${err}`)
-    return
 })
 
 const client = new Client({
@@ -61,6 +63,9 @@ client.on("ready", (event) => {
     console.log(`${event.user.tag} is ready.`)
 })
 
+let commandCount = 0;
+let aliveTime = Date.now() / 1000
+
 client.on('interactionCreate', async (interaction) => {
     if (!interaction.isChatInputCommand) {
         return;
@@ -72,34 +77,47 @@ client.on('interactionCreate', async (interaction) => {
     switch(interaction.commandName) {
         case "ping": {
             ping(interaction)
+            commandCount += 1
             break
         }
         case "bot_help": {
+            commandCount += 1
             bot_help(interaction);
             break
         }
         case "whitelist": {
+            commandCount += 1
             whitelist(interaction, determine_sheet(interaction, testing_sheet, conquistadors_sheet, lil_universe_sheet));
             break
         }
         case "change_username": {
+            commandCount += 1
             change_username(interaction, determine_sheet(interaction, testing_sheet, conquistadors_sheet, lil_universe_sheet));
             break
         }
         case "notify": {
+            commandCount += 1
             notify(interaction, determine_sheet(interaction, testing_sheet, conquistadors_sheet, lil_universe_sheet));
             break
         }
         case "claim_number": {
+            commandCount += 1
             claim_number(interaction, determine_sheet(interaction, testing_sheet, conquistadors_sheet, lil_universe_sheet));
             break
         }
         case "claimed_numbers": {
+            commandCount += 1
             claimed_numbers(interaction, determine_sheet(interaction, testing_sheet, conquistadors_sheet, lil_universe_sheet));
             break
         }
         case "express_rage": {
+            commandCount += 1
             express_rage(interaction)
+            break
+        }
+        case "diagnostics": {
+            commandCount += 1
+            diagnostics(interaction, commandCount, aliveTime)
             break
         }
     }
