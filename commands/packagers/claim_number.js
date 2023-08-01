@@ -22,18 +22,20 @@ export const claim_number = async (interaction, sheet) => {
         }
 
         let users = parseInt(await number_of_users(sheet));
+
+
         let user_ids = (await get_cells(sheet, `Sheet1!C2:C${users+1}`)).split(",");
         let numbers = (await get_cells(sheet, `Sheet1!D2:D${users+1}`)).split(",");
-        let usernames = (await get_cells(sheet, `Sheet1!A2:A${users+1}`)).split(",");
+        let discord_ids = (await get_cells(sheet, `Sheet1!C2:C${users+1}`)).split(",");
         const user_row = user_ids.findIndex(id => id === `#${interaction.user.id}`) + 2;
 
         if (numbers.includes(number_to_claim)) {
             const claimedIndex = numbers.findIndex(number => number === number_to_claim);
-            const claimedByUsername = usernames[claimedIndex];
+            const claimedById = discord_ids[claimedIndex];
 
-            claimedByUsername === interaction.user.username
+            claimedById === interaction.user.username
                 ? await interaction.followUp(`You've already claimed that number you doofus`)
-                : await interaction.followUp(`The number ${number_to_claim} has already been claimed by ${claimedByUsername}. Please select a new number.`);
+                : await interaction.followUp(`The number ${number_to_claim} has already been claimed by <@${discord_ids[claimedIndex].replace(/\D/g, '')}>. Please select a new number.`);
 
         }
         else {

@@ -7,15 +7,14 @@ export const claimed_numbers = async (interaction, sheet) => {
 
         let users = parseInt(await number_of_users(sheet));
         let numbers = (await get_cells(sheet, `Sheet1!D2:D${users+1}`)).split(",");
-        let usernames = (await get_cells(sheet, `Sheet1!A2:A${users+1}`)).split(',');
+        let discord_ids = (await get_cells(sheet, `Sheet1!C2:C${users+1}`)).split(',');
 
-        let parsed_numbers = []
-
-        for(let i = 0; i < users; i++) {
-            if(!isNaN(parseInt(numbers[i][0]))) {
-                parsed_numbers.push(`\n${numbers[i]} claimed by ${usernames[i]}`);
+        const parsed_numbers = numbers.map((number, index) => {
+            if (!isNaN(parseInt(number[0]))) {
+                return `\n${number} claimed by <@${discord_ids[index].replace(/\D/g, '')}>`;
             }
-        }
+            return null;
+        }).filter(item => item !== null)
 
         await interaction.followUp(`The currently claimed numbers are:${parsed_numbers.sort()}`);
     }
