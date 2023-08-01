@@ -20,7 +20,7 @@ export const claimed_numbers = async (interaction, sheet) => {
         await interaction.followUp(`The currently claimed numbers are:${parsed_numbers.sort()}`);
     }
     catch(err) {
-        interaction.channel.send(`Fatal error. Please let the developers of the bot know.\n${err}`)
+        interaction.channel.send(`Fatal error. \n${err}`)
         console.log(`Error: ${err}`)
     }
 }

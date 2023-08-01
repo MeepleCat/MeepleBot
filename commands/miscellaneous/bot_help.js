@@ -4,7 +4,7 @@ export const bot_help = (interaction) => {
 
     }
     catch(err) {
-        interaction.channel.send(`Fatal error. Please let the developers of the bot know.\n${err}`)
+        interaction.channel.send(`Fatal error. \n${err}`)
         console.log(`Error: ${err}`)
     }
 }

@@ -53,7 +53,7 @@ export const notify = async (interaction, sheet) => {
             await set_cells(sheet, `Sheet1!C2:G${users+1}`, new_values);
 
             let reply = people_to_notify.map(i => `<@${columns.ids[i].replace(/\D/g, '')}>`).join(", ");
-            reply += " you have been whitelisted.";
+            reply += ", you have been whitelisted.";
             await interaction.followUp(`${people_to_notify.length} ${people_to_notify.length === 1 ? 'person' : 'people' } to notify`);
             await interaction.channel.send(reply);
         } else {
@@ -61,7 +61,7 @@ export const notify = async (interaction, sheet) => {
         }
     }
     catch(err) {
-        interaction.channel.send(`Fatal error. Please let the developers of the bot know.\n${err}`)
+        interaction.channel.send(`Fatal error. \n${err}`)
         console.log(`Error: ${err}`)
     }
 }

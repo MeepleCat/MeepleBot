@@ -24,11 +24,17 @@ export const claim_number = async (interaction, sheet) => {
         let users = parseInt(await number_of_users(sheet));
         let user_ids = (await get_cells(sheet, `Sheet1!C2:C${users+1}`)).split(",");
         let numbers = (await get_cells(sheet, `Sheet1!D2:D${users+1}`)).split(",");
-
+        let usernames = (await get_cells(sheet, `Sheet1!A2:A${users+1}`)).split(",");
         const user_row = user_ids.findIndex(id => id === `#${interaction.user.id}`) + 2;
 
         if (numbers.includes(number_to_claim)) {
-            await interaction.followUp("The number you selected has already been claimed, please select a new number.");
+            const claimedIndex = numbers.findIndex(number => number === number_to_claim);
+            const claimedByUsername = usernames[claimedIndex];
+
+            claimedByUsername === interaction.user.username
+                ? await interaction.followUp(`You've already claimed that number you doofus`)
+                : await interaction.followUp(`The number ${number_to_claim} has already been claimed by ${claimedByUsername}. Please select a new number.`);
+
         }
         else {
             await set_cells(sheet, `D${user_row}`, [[number_to_claim]]);
@@ -36,7 +42,7 @@ export const claim_number = async (interaction, sheet) => {
         }
     }
     catch(err) {
-        interaction.channel.send(`Fatal error. Please let the developers of the bot know.\n${err}`);
+        interaction.channel.send(`Fatal error. \n${err}`);
         console.log(`Error: ${err}`);
     }
 }
