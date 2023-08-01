@@ -67,60 +67,61 @@ let commandCount = 0;
 let aliveTime = Date.now() / 1000
 
 client.on('interactionCreate', async (interaction) => {
-    if (!interaction.isChatInputCommand) {
-        return;
-    }
-    // Logging
-    console.log("A new command just ran.");
-    console.log(`           Command: /${interaction.commandName}`);
-    console.log(`           Author: ${interaction.user.tag}`)
-    switch(interaction.commandName) {
-        case "ping": {
-            ping(interaction)
-            commandCount += 1
-            break
+        if (!interaction.isChatInputCommand || interaction.guild === null) {
+            interaction.reply("You cannot run these commands in DMs.")
+            return;
         }
-        case "bot_help": {
-            commandCount += 1
-            bot_help(interaction);
-            break
+
+        console.log("A new command just ran.");
+        console.log(`           Command: /${interaction.commandName}`);
+        console.log(`           Author: ${interaction.user.tag}`)
+        switch (interaction.commandName) {
+            case "ping": {
+                await ping(interaction)
+                commandCount += 1
+                break
+            }
+            case "bot_help": {
+                commandCount += 1
+                await bot_help(interaction);
+                break
+            }
+            case "whitelist": {
+                commandCount += 1
+                await whitelist(interaction, determine_sheet(interaction, testing_sheet, conquistadors_sheet, lil_universe_sheet));
+                break
+            }
+            case "change_username": {
+                commandCount += 1
+                await change_username(interaction, determine_sheet(interaction, testing_sheet, conquistadors_sheet, lil_universe_sheet));
+                break
+            }
+            case "notify": {
+                commandCount += 1
+                await notify(interaction, determine_sheet(interaction, testing_sheet, conquistadors_sheet, lil_universe_sheet));
+                break
+            }
+            case "claim_number": {
+                commandCount += 1
+                await claim_number(interaction, determine_sheet(interaction, testing_sheet, conquistadors_sheet, lil_universe_sheet));
+                break
+            }
+            case "claimed_numbers": {
+                commandCount += 1
+                await claimed_numbers(interaction, determine_sheet(interaction, testing_sheet, conquistadors_sheet, lil_universe_sheet));
+                break
+            }
+            case "express_rage": {
+                commandCount += 1
+                await express_rage(interaction)
+                break
+            }
+            case "diagnostics": {
+                commandCount += 1
+                await diagnostics(interaction, commandCount, aliveTime)
+                break
+            }
         }
-        case "whitelist": {
-            commandCount += 1
-            whitelist(interaction, determine_sheet(interaction, testing_sheet, conquistadors_sheet, lil_universe_sheet));
-            break
-        }
-        case "change_username": {
-            commandCount += 1
-            change_username(interaction, determine_sheet(interaction, testing_sheet, conquistadors_sheet, lil_universe_sheet));
-            break
-        }
-        case "notify": {
-            commandCount += 1
-            notify(interaction, determine_sheet(interaction, testing_sheet, conquistadors_sheet, lil_universe_sheet));
-            break
-        }
-        case "claim_number": {
-            commandCount += 1
-            claim_number(interaction, determine_sheet(interaction, testing_sheet, conquistadors_sheet, lil_universe_sheet));
-            break
-        }
-        case "claimed_numbers": {
-            commandCount += 1
-            claimed_numbers(interaction, determine_sheet(interaction, testing_sheet, conquistadors_sheet, lil_universe_sheet));
-            break
-        }
-        case "express_rage": {
-            commandCount += 1
-            express_rage(interaction)
-            break
-        }
-        case "diagnostics": {
-            commandCount += 1
-            diagnostics(interaction, commandCount, aliveTime)
-            break
-        }
-    }
 })
 
 
