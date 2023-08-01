@@ -23,11 +23,10 @@ export const change_username = async (interaction, sheet) => {
         }
 
         if(user_row !== -1) {
-            set_cells(sheet, `B${user_row}`, [[interaction.options.getString("new_username")]]);
-            set_cells(sheet, `E${user_row}`, [["no"]])
-            set_cells(sheet, `F${user_row}`, [["no"]])
-            await interaction.followUp("Your username has been updated successfully.");
-            return;
+            await set_cells(sheet, `B${user_row}`, [[interaction.options.getString("new_username")]]);
+            await set_cells(sheet, `E${user_row}`, [["no"]])
+            await set_cells(sheet, `F${user_row}`, [["no"]])
+            await interaction.followUp("Your username has been updated successfully. If you were already whitelisted, you will have be rewhitelisted.");
         }
         else {
             await interaction.followUp("You must be whitelisted in order to change your username.");
