@@ -4,7 +4,7 @@ export const diagnostics = async (interaction, commandCount, aliveTime) => {
     const secondsAlive = currentTime - aliveTime;
     const hoursAlive = Math.floor(secondsAlive / 3600);
     const minutesAlive = Math.floor((secondsAlive % 3600) / 60);
-
-    interaction.reply(`# Diagnostics \nBot online for: ${hoursAlive} hours, ${minutesAlive} minutes\nCommands ran: ${commandCount}`)
+    const remainingSeconds = Math.floor(secondsAlive % 60);
+    interaction.reply(`# Diagnostics \nBot online for: ${hoursAlive} hours, ${minutesAlive} minutes, ${remainingSeconds} seconds\nCommands ran: ${commandCount}`)
 
 }
