@@ -1,6 +1,7 @@
 import { number_of_users } from "../../google_sheets/number_of_users.js";
 import { get_cells } from "../../google_sheets/get_cells.js";
 import { set_cells } from "../../google_sheets/set_cells.js";
+import {claimed_numbers} from "./claimed_numbers.js";
 
 export const claim_number = async (interaction, sheet) => {
     try {
@@ -27,15 +28,16 @@ export const claim_number = async (interaction, sheet) => {
         let user_ids = (await get_cells(sheet, `Sheet1!C2:C${users+1}`)).split(",");
         let numbers = (await get_cells(sheet, `Sheet1!D2:D${users+1}`)).split(",");
         let discord_ids = (await get_cells(sheet, `Sheet1!C2:C${users+1}`)).split(",");
+        let usernames = (await get_cells(sheet, `Sheet1!A2:A${users+1}`)).split(",");
         const user_row = user_ids.findIndex(id => id === `#${interaction.user.id}`) + 2;
 
         if (numbers.includes(number_to_claim)) {
             const claimedIndex = numbers.findIndex(number => number === number_to_claim);
-            const claimedById = discord_ids[claimedIndex];
+            const claimedByUsername = usernames[claimedIndex];
 
-            claimedById === interaction.user.username
+            claimedByUsername === interaction.user.username
                 ? await interaction.followUp(`You've already claimed that number you doofus`)
-                : await interaction.followUp(`The number ${number_to_claim} has already been claimed by <@${discord_ids[claimedIndex].replace(/\D/g, '')}>. Please select a new number.`);
+                : await interaction.followUp(`The number ${number_to_claim} has already been claimed by ${usernames[claimedIndex]}. Please select a new number.`);
 
         }
         else {
