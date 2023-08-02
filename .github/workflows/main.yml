@@ -1,0 +1,33 @@
+name: Update RPi
+
+on:
+  push:
+    branches:
+      - main
+      
+jobs:
+
+  deploy-server:
+    runs-on: ubuntu-latest
+    #if: ${{ false }}  # disable for now
+    if: github.ref == 'refs/heads/main' # safe trigger
+    steps:
+
+      - name: Patch tag
+        shell: bash
+        env:
+          SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          IP: 185.249.154.184
+          PORT: 25777
+        run: |
+          
+          # add keys
+          ssh-keyscan -H ${{ env.IP }} >> ~/.ssh/known_hosts
+          
+          # add private key to the system
+          echo "${{ env.SSH_KEY }}" > ~/.ssh/id_rsa
+          
+          # connect to ssh
+          ssh pi@${{ env.IP }} -p ${{ env.PORT }} -c ""
+          
+          
