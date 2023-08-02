@@ -13,7 +13,7 @@ jobs:
     if: github.ref == 'refs/heads/main' # safe trigger
     steps:
 
-      - name: Patch tag
+      - name: deploy
         shell: bash
         env:
           SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -22,12 +22,14 @@ jobs:
         run: |
           
           # add keys
+          mkdir -p .ssh
           ssh-keyscan -H ${{ env.IP }} >> ~/.ssh/known_hosts
           
           # add private key to the system
           echo "${{ env.SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 400 ~/.ssh/id_rsa
           
           # connect to ssh
-          ssh pi@${{ env.IP }} -p ${{ env.PORT }} -c ""
+          ssh pi@${{ env.IP }} -p ${{ env.PORT }} "whoami; date"
           
           
