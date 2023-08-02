@@ -22,7 +22,7 @@ jobs:
         run: |
           
           # add keys
-          mkdir -p .ssh
+          mkdir -p ~/.ssh
           ssh-keyscan -H ${{ env.IP }} >> ~/.ssh/known_hosts
           
           # add private key to the system
