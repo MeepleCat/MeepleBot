@@ -25,7 +25,7 @@ jobs:
           mkdir -p ~/.ssh
           ssh-keyscan -p ${{ env.PORT }} -H ${{ env.IP }} >> ~/.ssh/known_hosts
 
-          cat ~/.ssh/known_hosts
+          # cat ~/.ssh/known_hosts
           
           # add private key to the system
           echo "${{ env.SSH_KEY }}" > ~/.ssh/id_rsa
