@@ -34,7 +34,7 @@ jobs:
           echo "PK added"
           
           # connect to ssh
-          ssh -i ~/.ssh/id_rsa pi@${{ env.IP }} -p ${{ env.PORT }} "cd MeepleBot; nohup ./update.sh > /dev/null 2>&1 &"
+          ssh -i ~/.ssh/id_rsa pi@${{ env.IP }} -p ${{ env.PORT }} "cd MeepleBot; rm nohup.out || true; nohup ./update.sh &"
 
           echo "Done"
           
