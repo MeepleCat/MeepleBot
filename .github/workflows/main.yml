@@ -34,7 +34,7 @@ jobs:
           echo "PK added"
           
           # connect to ssh
-          ssh -i ~/.ssh/id_rsa pi@${{ env.IP }} -p ${{ env.PORT }} "./update-meeplebot.sh"
+          ssh -i ~/.ssh/id_rsa pi@${{ env.IP }} -p ${{ env.PORT }} "cd MeepleBot; ./update.sh"
 
           echo "Done"
           
