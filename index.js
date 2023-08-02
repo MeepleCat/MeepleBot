@@ -82,43 +82,43 @@ client.on('interactionCreate', async (interaction) => {
                 break
             }
             case "bot_help": {
-                commandCount += 1
                 await bot_help(interaction);
+                commandCount += 1
                 break
             }
             case "whitelist": {
-                commandCount += 1
                 await whitelist(interaction, determine_sheet(interaction, testing_sheet, conquistadors_sheet, lil_universe_sheet));
+                commandCount += 1
                 break
             }
             case "change_username": {
-                commandCount += 1
                 await change_username(interaction, determine_sheet(interaction, testing_sheet, conquistadors_sheet, lil_universe_sheet));
+                commandCount += 1
                 break
             }
             case "notify": {
-                commandCount += 1
                 await notify(interaction, determine_sheet(interaction, testing_sheet, conquistadors_sheet, lil_universe_sheet));
+                commandCount += 1
                 break
             }
             case "claim_number": {
-                commandCount += 1
                 await claim_number(interaction, determine_sheet(interaction, testing_sheet, conquistadors_sheet, lil_universe_sheet));
+                commandCount += 1
                 break
             }
             case "claimed_numbers": {
-                commandCount += 1
                 await claimed_numbers(interaction, determine_sheet(interaction, testing_sheet, conquistadors_sheet, lil_universe_sheet));
+                commandCount += 1
                 break
             }
             case "express_rage": {
-                commandCount += 1
                 await express_rage(interaction)
+                commandCount += 1
                 break
             }
             case "diagnostics": {
-                commandCount += 1
                 await diagnostics(interaction, commandCount, aliveTime)
+                commandCount += 1
                 break
             }
         }
