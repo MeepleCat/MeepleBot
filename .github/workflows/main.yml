@@ -24,12 +24,18 @@ jobs:
           # add keys
           mkdir -p ~/.ssh
           ssh-keyscan -H ${{ env.IP }} >> ~/.ssh/known_hosts
+
+          cat ~/.ssh/known_hosts
           
           # add private key to the system
           echo "${{ env.SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 400 ~/.ssh/id_rsa
+
+          echo "PK added"
           
           # connect to ssh
-          ssh pi@${{ env.IP }} -p ${{ env.PORT }} "whoami; date"
+          ssh -i ~/.ssh/id_rsa pi@${{ env.IP }} -p ${{ env.PORT }} -vvv "whoami; date"
+
+          echo "Done"
           
           
