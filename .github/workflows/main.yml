@@ -20,8 +20,6 @@ jobs:
           IP: 185.249.154.184
           PORT: 25777
         run: |
-
-          set -x
           
           # add keys
           mkdir -p ~/.ssh
@@ -36,7 +34,7 @@ jobs:
           echo "PK added"
           
           # connect to ssh
-          ssh -i ~/.ssh/id_rsa pi@${{ env.IP }} -p ${{ env.PORT }} -vvv "whoami; date"
+          ssh -i ~/.ssh/id_rsa pi@${{ env.IP }} -p ${{ env.PORT }} "./update-meeplebot.sh"
 
           echo "Done"
           
