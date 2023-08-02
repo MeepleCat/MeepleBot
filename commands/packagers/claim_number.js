@@ -27,7 +27,6 @@ export const claim_number = async (interaction, sheet) => {
 
         let user_ids = (await get_cells(sheet, `Sheet1!C2:C${users+1}`)).split(",");
         let numbers = (await get_cells(sheet, `Sheet1!D2:D${users+1}`)).split(",");
-        let discord_ids = (await get_cells(sheet, `Sheet1!C2:C${users+1}`)).split(",");
         let usernames = (await get_cells(sheet, `Sheet1!A2:A${users+1}`)).split(",");
         const user_row = user_ids.findIndex(id => id === `#${interaction.user.id}`) + 2;
 
