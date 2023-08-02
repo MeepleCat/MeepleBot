@@ -20,6 +20,8 @@ jobs:
           IP: 185.249.154.184
           PORT: 25777
         run: |
+
+          set -x
           
           # add keys
           mkdir -p ~/.ssh
@@ -28,13 +30,13 @@ jobs:
           cat ~/.ssh/known_hosts
           
           # add private key to the system
-          echo "${{ env.SSH_KEY }}" > ~/.ssh/id_rsa
-          chmod 400 ~/.ssh/id_rsa
+          #echo "${{ env.SSH_KEY }}" > ~/.ssh/id_rsa
+          #chmod 400 ~/.ssh/id_rsa
 
-          echo "PK added"
+          #echo "PK added"
           
           # connect to ssh
-          ssh -i ~/.ssh/id_rsa pi@${{ env.IP }} -p ${{ env.PORT }} -vvv "whoami; date"
+          #ssh -i ~/.ssh/id_rsa pi@${{ env.IP }} -p ${{ env.PORT }} -vvv "whoami; date"
 
           echo "Done"
           
