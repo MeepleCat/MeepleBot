@@ -31,6 +31,7 @@ export const claim_number = async (interaction, sheet) => {
 
         if(!usernames.includes(interaction.user.username)) {
             await interaction.followUp("You are not registered. Please use /whitelist.")
+            return;
         }
 
         if (numbers.includes(number_to_claim)) {
