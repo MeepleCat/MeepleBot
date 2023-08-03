@@ -22,6 +22,8 @@ export const bot_help = (interaction) => {
             "This command is used to check if the bot is responding.\n" +
             "### /bot_help\n" +
             "You used this command.\n" +
+            "### /ip_help\n" +
+            "This command is a guide that shows how to connect to the server.\n" +
             "### /diagnostics\n" +
             "Shows information about the bot such as how long it's been online for and the amount of commands ran since last update."
         )
