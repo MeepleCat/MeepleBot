@@ -73,5 +73,10 @@ export const commands = [
         name: "diagnostics",
         description: "Bot status",
         type: 1,
+    },
+    {
+        name: "ip_help",
+        description: "A guide to help you connect to the server",
+        type: 1,
     }
 ]

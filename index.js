@@ -14,6 +14,7 @@ import { claim_number } from "./commands/packagers/claim_number.js";
 import { claimed_numbers } from "./commands/packagers/claimed_numbers.js";
 import { express_rage } from "./commands/miscellaneous/express_rage.js";
 import { diagnostics } from "./commands/miscellaneous/diagnostics.js";
+import { ip_help } from "./commands/miscellaneous/ip_help.js";
 configDotenv();
 
 const conquistadors_sheet = "12v9rcF2kyaADv3E5aIxCrKY84w7qCOs07EANSWWfjqA";
@@ -118,6 +119,11 @@ client.on('interactionCreate', async (interaction) => {
             }
             case "diagnostics": {
                 await diagnostics(interaction, commandCount, aliveTime)
+                commandCount += 1
+                break
+            }
+            case "ip_help": {
+                await ip_help(interaction)
                 commandCount += 1
                 break
             }
