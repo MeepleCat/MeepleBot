@@ -51,11 +51,15 @@ export const notify = async (interaction, sheet) => {
             }
 
             await set_cells(sheet, `Sheet1!C2:G${users+1}`, new_values);
-
-            let reply = people_to_notify.map(i => `<@${columns.ids[i].replace(/\D/g, '')}>`).join(", ");
-            reply += ", you have been whitelisted.";
             await interaction.followUp(`${people_to_notify.length} ${people_to_notify.length === 1 ? 'person' : 'people' } to notify`);
-            await interaction.channel.send(reply);
+
+            const chunkSize = 5;
+            for (let i = 0; i < people_to_notify.length; i += chunkSize) {
+                let reply = people_to_notify.slice(i, i + chunkSize).map(j => `<@${columns.ids[j].replace(/\D/g, '')}>`).join(", ");
+
+                await interaction.channel.send(reply);
+            }
+                await interaction.channel.send("Everyone who got pinged has been whitelisted.")
         } else {
             await interaction.followUp({ content: "There is no one to notify", ephemeral: true });
         }
