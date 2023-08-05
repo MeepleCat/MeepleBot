@@ -29,7 +29,7 @@ export const claim_number = async (interaction, sheet) => {
         let usernames = (await get_cells(sheet, `Sheet1!A2:A${users+1}`)).split(",");
         const user_row = user_ids.findIndex(id => id === `#${interaction.user.id}`) + 2;
 
-        if(!usernames.includes(interaction.user.username)) {
+        if(!user_ids.includes("#"+interaction.user.id)) {
             await interaction.followUp("You are not registered. Please use /whitelist.")
             return;
         }
