@@ -3,7 +3,7 @@ import { get_cells } from "../../google_sheets/get_cells.js";
 
 export const claimed_numbers = async (interaction, sheet) => {
     try {
-        await interaction.deferReply();
+        await interaction.deferReply({ephemeral:true});
 
         let users = parseInt(await number_of_users(sheet));
         let numbers = (await get_cells(sheet, `Sheet1!D2:D${users+1}`)).split(",");

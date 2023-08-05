@@ -4,7 +4,7 @@ import { set_cells } from "../../google_sheets/set_cells.js";
 
 export const claim_number = async (interaction, sheet) => {
     try {
-        await interaction.deferReply();
+        await interaction.deferReply({ephemeral:true});
 
         const shuttle = interaction.options.getInteger("shuttle");
         const thruster = interaction.options.getInteger("thruster");
