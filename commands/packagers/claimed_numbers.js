@@ -7,11 +7,11 @@ export const claimed_numbers = async (interaction, sheet) => {
 
         let users = parseInt(await number_of_users(sheet));
         let numbers = (await get_cells(sheet, `Sheet1!D2:D${users+1}`)).split(",");
-        let usernames = (await get_cells(sheet, `Sheet1!A2:A${users+1}`)).split(',');
+        let user_ids = (await get_cells(sheet, `Sheet1!C2:C${users+1}`)).split(',');
 
         const parsed_numbers = numbers.map((number, index) => {
             if (!isNaN(parseInt(number[0]))) {
-                return `\n${number} claimed by ${usernames[index]}`;
+                return `\n${number} claimed by <@${user_ids[index].replace(/\D/g, '')}>`;
             }
             return null;
         }).filter(item => item !== null)
