@@ -54,7 +54,7 @@ export const notify = async (interaction, sheet) => {
             await set_cells(sheet, `Sheet1!C2:F${users+1}`, new_values);
 
             let reply = people_to_notify.map(i => `<@${columns.ids[i].replace(/\D/g, '')}>`).join(", ");
-            reply += ", you have been whitelisted. Check <#server-info> to join the realm.";
+            reply += ", you have been whitelisted. Check <#1038421196217274449> to join the realm.";
             await interaction.followUp(`${people_to_notify.length} ${people_to_notify.length === 1 ? 'person' : 'people' } to notify`);
             await interaction.channel.send(reply);
             // Iterate through the people to notify and assign the role
