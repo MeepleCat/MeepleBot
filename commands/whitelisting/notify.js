@@ -7,21 +7,23 @@ export const notify = async (interaction, sheet) => {
         await interaction.deferReply({ ephemeral: true });
 
         let users = parseInt(await number_of_users(sheet));
-        let data = (await get_cells(sheet, `Sheet1!C2:F${users+1}`)).split(",");
+        let data = (await get_cells(sheet, `Sheet1!C2:G${users+1}`)).split(",");
 
         let columns = {
             ids: [],
+            rocket_ids: [],
             whitelisted: [],
             notified: [],
             times_whitelisted: []
         };
 
         for (let i = 0; i < users * 5; i++) {
-            switch (i % 4) {
+            switch (i % 5) {
                 case 0: columns.ids.push(data[i]); break;
-                case 1: columns.whitelisted.push(data[i]); break;
-                case 2: columns.notified.push(data[i]); break;
-                case 3: columns.times_whitelisted.push(data[i]); break;
+                case 1: columns.rocket_ids.push(data[i]); break;
+                case 2: columns.whitelisted.push(data[i]); break;
+                case 3: columns.notified.push(data[i]); break;
+                case 4: columns.times_whitelisted.push(data[i]); break;
             }
         }
 
@@ -41,22 +43,19 @@ export const notify = async (interaction, sheet) => {
             for (let i = 0; i < users; i++) {
                 new_values.push([
                     columns.ids[i],
+                    columns.rocket_ids[i],
                     columns.whitelisted[i],
                     columns.notified[i],
                     columns.times_whitelisted[i]
                 ]);
             }
 
-            await set_cells(sheet, `Sheet1!C2:F${users+1}`, new_values);
+            await set_cells(sheet, `Sheet1!C2:G${users+1}`, new_values);
+
+            let reply = people_to_notify.map(i => `<@${columns.ids[i].replace(/\D/g, '')}>`).join(", ");
+            reply += ", you have been whitelisted.";
             await interaction.followUp(`${people_to_notify.length} ${people_to_notify.length === 1 ? 'person' : 'people' } to notify`);
-
-            const chunkSize = 5;
-            for (let i = 0; i < people_to_notify.length; i += chunkSize) {
-                let reply = people_to_notify.slice(i, i + chunkSize).map(j => `<@${columns.ids[j].replace(/\D/g, '')}>`).join(", ");
-
-                await interaction.channel.send(reply);
-            }
-                await interaction.channel.send("Everyone who got pinged has been whitelisted.")
+            await interaction.channel.send(reply);
         } else {
             await interaction.followUp({ content: "There is no one to notify", ephemeral: true });
         }
