@@ -1,3 +1,12 @@
+/*
+
+THIS IS AN OUTDATED VERSION OF MEEPLEBOT AND WILL NO LONGER BE SUPPORTED.
+THIS VERSION HAS SPECIFIC FEATURES TAILORED TO ASTRONEER SERVERS.
+IF YOU ARE USING AN ASTRONEER SERVER, THAN USE THIS VERSION.
+ALL OTHER SERVERS USE MAIN.
+
+*/
+
 import {Client, GatewayIntentBits} from "discord.js";
 import { publishCommands } from "./commands/publishCommands.js";
 import { configDotenv } from "dotenv";
