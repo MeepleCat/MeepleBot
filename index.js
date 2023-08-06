@@ -10,8 +10,6 @@ import { determine_sheet } from "./google_sheets/determine_sheet.js";
 import { whitelist } from "./commands/whitelisting/whitelist.js";
 import { change_username } from "./commands/whitelisting/change_username.js";
 import { notify } from "./commands/whitelisting/notify.js";
-import { claim_number } from "./commands/packagers/claim_number.js";
-import { claimed_numbers } from "./commands/packagers/claimed_numbers.js";
 import { express_rage } from "./commands/miscellaneous/express_rage.js";
 import { diagnostics } from "./commands/miscellaneous/diagnostics.js";
 import { ip_help } from "./commands/miscellaneous/ip_help.js";
@@ -22,7 +20,7 @@ const testing_sheet = "15jiM_EesRVD0tespvZjnRNQ7a7-9qJ3ZbPtNkpOm_Ho";
 const lil_universe_sheet = "1X2Ipg8CvCg5yeAIrdwGcWPV8hc6H72IadP0jmFbw99k";
 const scopes = ["https://www.googleapis.com/auth/spreadsheets"];
 
-const token = process.env.token;
+const token = process.env.token_testing;
 
 import express from "express";
 const app = express();
@@ -99,16 +97,6 @@ client.on('interactionCreate', async (interaction) => {
             }
             case "notify": {
                 await notify(interaction, determine_sheet(interaction, testing_sheet, conquistadors_sheet, lil_universe_sheet));
-                commandCount += 1
-                break
-            }
-            case "claim_number": {
-                await claim_number(interaction, determine_sheet(interaction, testing_sheet, conquistadors_sheet, lil_universe_sheet));
-                commandCount += 1
-                break
-            }
-            case "claimed_numbers": {
-                await claimed_numbers(interaction, determine_sheet(interaction, testing_sheet, conquistadors_sheet, lil_universe_sheet));
                 commandCount += 1
                 break
             }

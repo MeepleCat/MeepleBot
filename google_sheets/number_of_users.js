@@ -6,7 +6,7 @@ export const number_of_users = async (sheet) => {
     const response = await sheets.spreadsheets.values.get({
     auth,
     spreadsheetId: sheet,
-    range: "Sheet1!I2",
+    range: "Sheet1!H2",
   });
 
   try {

@@ -18,12 +18,11 @@ export const whitelist = async (interaction, sheet) => {
             await interaction.followUp("You are already registered with the bot, there is no need to re-register." +
                 " If you wish to change your registered username please use /change_username.");
         } else {
-            const range = `A${users+2}:H${users+2}`;
+            const range = `A${users+2}:G${users+2}`;
             let values = [[
                 interaction.user.username,
                 interaction.options.getString("username"),
                 "#"+interaction.user.id,
-                "N/A",
                 "no",
                 "no",
                 0,

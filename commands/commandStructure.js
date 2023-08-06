@@ -31,30 +31,6 @@ export const commands = [
         type: 1,
     },
     {
-        name: "claim_number",
-        description: "Allows you to claim a packager number",
-        type: 1, 
-        options: [
-            {
-                name: "shuttle",
-                description: "number of packagers to put on your shuttle",
-                type: 4,
-                required: true,
-            },
-            {
-                name: "thruster",
-                description: "number of packagers to put on your thruster",
-                type: 4,
-                required: true,
-            }
-        ]
-    },
-    {
-        name: "claimed_numbers",
-        description: "Lists the claimed numbers",
-        type: 1,
-    },
-    {
         name: "ping",
         description: "Hopefully replies with pong",
         type: 1,

@@ -24,8 +24,8 @@ export const change_username = async (interaction, sheet) => {
 
         if(user_row !== -1) {
             await set_cells(sheet, `B${user_row}`, [[interaction.options.getString("new_username")]]);
+            await set_cells(sheet, `D${user_row}`, [["no"]])
             await set_cells(sheet, `E${user_row}`, [["no"]])
-            await set_cells(sheet, `F${user_row}`, [["no"]])
             await interaction.followUp("Your username has been updated successfully. If you were already whitelisted, you will have be rewhitelisted.");
         }
         else {
