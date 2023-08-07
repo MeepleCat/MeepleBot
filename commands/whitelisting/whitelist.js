@@ -23,8 +23,8 @@ export const whitelist = async (interaction, sheet) => {
                 interaction.user.username,
                 interaction.options.getString("username"),
                 "#"+interaction.user.id,
-                "no",
-                "no",
+                "yes",
+                "yes",
                 0,
                 new Date().toString()
             ]]

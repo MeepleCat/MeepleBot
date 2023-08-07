@@ -25,11 +25,11 @@ export const commands = [
             }
         ]
     },
-    {
-        name: "notify",
-        description: "notifies all the people who have been whitelisted",
-        type: 1,
-    },
+    // {
+    //     name: "notify",
+    //     description: "notifies all the people who have been whitelisted",
+    //     type: 1,
+    // },
     {
         name: "ping",
         description: "Hopefully replies with pong",
