@@ -29,8 +29,16 @@ export const whitelist = async (interaction, sheet) => {
                 new Date().toString()
             ]]
             await new_row(sheet, range, values);
-
-            await interaction.followUp("You have been added to the queue to be whitelisted.");
+            const role = interaction.guild.roles.cache.find(r => r.name === 'Player');
+            if (!role) {
+                await interaction.followUp("the 'Player' role was not found ")
+                return;
+            }
+            const member = await interaction.guild.members.fetch(interaction.user.id);
+            if (member) {
+                await member.roles.add(role);
+            }
+            await interaction.followUp("You have been given the 'Player' role. Check <#1038421196217274449> to join the realm.");
         }
     }
     catch(err) {
