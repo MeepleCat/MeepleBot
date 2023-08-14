@@ -13,6 +13,10 @@ import { notify } from "./commands/whitelisting/notify.js";
 import { express_rage } from "./commands/miscellaneous/express_rage.js";
 import { diagnostics } from "./commands/miscellaneous/diagnostics.js";
 import { ip_help } from "./commands/miscellaneous/ip_help.js";
+import { wave_function_collapse } from "./commands/miscellaneous/wave_function_collapse/wave_function_collapse.js";
+
+wave_function_collapse();
+
 configDotenv();
 
 const conquistadors_sheet = "12v9rcF2kyaADv3E5aIxCrKY84w7qCOs07EANSWWfjqA";
@@ -20,7 +24,7 @@ const testing_sheet = "15jiM_EesRVD0tespvZjnRNQ7a7-9qJ3ZbPtNkpOm_Ho";
 const lil_universe_sheet = "1X2Ipg8CvCg5yeAIrdwGcWPV8hc6H72IadP0jmFbw99k";
 const scopes = ["https://www.googleapis.com/auth/spreadsheets"];
 
-const token = process.env.token;
+const token = process.env.token_testing;
 
 import express from "express";
 const app = express();
