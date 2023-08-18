@@ -1,4 +1,4 @@
-import {Client, GatewayIntentBits} from "discord.js";
+import {Client, GatewayIntentBits } from "discord.js";
 import { publishCommands } from "./commands/publishCommands.js";
 import { configDotenv } from "dotenv";
 import { commands } from "./commands/commandStructure.js";
@@ -52,9 +52,7 @@ auth.authorize().catch((err) => {
 })
 
 const client = new Client({
-    intents: [
-        GatewayIntentBits.Guilds,
-    ]
+    intents: 1
 })
  
 const main = async () => {

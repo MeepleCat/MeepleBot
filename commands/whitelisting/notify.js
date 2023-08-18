@@ -34,7 +34,11 @@ export const notify = async (interaction, sheet) => {
                 columns.times_whitelisted[i] = parseInt(columns.times_whitelisted[i]) + 1;
             }
         }
-
+        const role = interaction.guild.roles.cache.find(r => r.name === 'Player');
+        if (!role) {
+            interaction.followUp("the 'Player' role was not found ")
+            return;
+        }
         if (people_to_notify.length !== 0) {
             let new_values = [];
 
@@ -50,12 +54,22 @@ export const notify = async (interaction, sheet) => {
             await set_cells(sheet, `Sheet1!C2:F${users+1}`, new_values);
 
             let reply = people_to_notify.map(i => `<@${columns.ids[i].replace(/\D/g, '')}>`).join(", ");
-            reply += ", you have been whitelisted.";
+            reply += ", you have been whitelisted. Check <#1038421196217274449> to join the realm.";
             await interaction.followUp(`${people_to_notify.length} ${people_to_notify.length === 1 ? 'person' : 'people' } to notify`);
             await interaction.channel.send(reply);
+            // Iterate through the people to notify and assign the role
+            for (let i of people_to_notify) {
+                const userId = columns.ids[i].replace(/\D/g, '');
+                const member = await interaction.guild.members.fetch(userId);
+                if (member) {
+                    await member.roles.add(role);
+                }
+            }
         } else {
             await interaction.followUp({ content: "There is no one to notify", ephemeral: true });
         }
+
+
     }
     catch(err) {
         interaction.channel.send(`Fatal error. \n${err}`)

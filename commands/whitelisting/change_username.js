@@ -21,11 +21,17 @@ export const change_username = async (interaction, sheet) => {
                 user_row = i + 2
             }
         }
-
+        const role = interaction.guild.roles.cache.find(r => r.name === 'Player');
+        if (!role) {
+            interaction.followUp("the 'Player' role was not found, could not remove it from you.")
+            return;
+        }
         if(user_row !== -1) {
             await set_cells(sheet, `B${user_row}`, [[interaction.options.getString("new_username")]]);
             await set_cells(sheet, `D${user_row}`, [["no"]])
             await set_cells(sheet, `E${user_row}`, [["no"]])
+            const member = await interaction.guild.members.fetch(interaction.user.id);
+            member.roles.remove(role);
             await interaction.followUp("Your username has been updated successfully. If you were already whitelisted, you will have be rewhitelisted.");
         }
         else {
