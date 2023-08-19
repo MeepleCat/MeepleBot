@@ -24,7 +24,7 @@ const testing_sheet = "15jiM_EesRVD0tespvZjnRNQ7a7-9qJ3ZbPtNkpOm_Ho";
 const lil_universe_sheet = "1X2Ipg8CvCg5yeAIrdwGcWPV8hc6H72IadP0jmFbw99k";
 const scopes = ["https://www.googleapis.com/auth/spreadsheets"];
 
-const token = process.env.token_testing;
+const token = process.env.token;
 
 import express from "express";
 const app = express();
