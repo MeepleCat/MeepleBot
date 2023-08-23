@@ -1,5 +1,8 @@
 ## MeepleBot
 
+### THIS IS THE ARCHIVE BRANCH.
+Everything in this branch is outdated and no longer maintained. Use at your own risk.
+
 ### Summary
 MeepleBot is a discord bot designed to facilitate the whitelisting of players on multiplayer servers through google sheets integration.
 Currently the bot only works on one server but might eventually be expanded to work on others.
