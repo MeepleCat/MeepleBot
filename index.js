@@ -76,7 +76,9 @@ client.on('interactionCreate', async (interaction) => {
         console.log("A new command just ran.");
         console.log(`           Command: /${interaction.commandName}`);
         console.log(`           Author: ${interaction.user.tag}`)
-        switch (interaction.commandName) {
+
+        interaction.reply("I'm sorry, support for MeepleBot has been temporarilly removed. Please ask Etana812 why :)");
+        /*switch (interaction.commandName) {
             case "ping": {
                 await ping(interaction)
                 commandCount += 1
@@ -118,6 +120,7 @@ client.on('interactionCreate', async (interaction) => {
                 break
             }
         }
+        */
 })
 
 
