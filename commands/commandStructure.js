@@ -32,5 +32,10 @@ export const commands = [
         name: "transaction-history",
         description: "View your transaction history",
         type: 1,
+    },
+    {
+        name: "work",
+        description: "Gain money by working",
+        type: 1,
     }
 ]

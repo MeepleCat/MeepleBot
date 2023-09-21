@@ -6,6 +6,7 @@ import { add_users_to_db } from "./commands/add_users_to_db.js";
 import { balance } from "./commands/balance.js";
 import { sendMoney } from "./commands/sendmoney.js";
 import { transactionHistory } from "./commands/transaction-history.js";
+import { work } from "./commands/work.js";
 configDotenv();
 const client = new Client({
     intents: [
@@ -38,6 +39,10 @@ client.on("interactionCreate", (interaction)=>{
         }
         case "transaction-history": {
             transactionHistory(interaction)
+            break;
+        }
+        case "work": {
+            work(interaction)
             break;
         }
     }
