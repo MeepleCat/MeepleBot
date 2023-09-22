@@ -21,15 +21,15 @@ export const work = async (interaction) => {
             `You worked at Pizza Hut and got `,
             `You were promoted to manager of Pizza Hut and gained `,
         ];
-        const probabilities = {
-            0: 10, 
-            1: 1,
-        };
+        const probabilities = [
+            10, 
+            1,
+        ]
 
         // INFO: picks a number that is less than the total probability
         let totalProability = 0;
-        for(let key in probabilities) {
-            totalProability += probabilities[key];
+        for(let number of probabilities) {
+            totalProability += number;
         }
         let result = Math.floor(Math.random() * totalProability);
 
