@@ -1,4 +1,4 @@
-import { EmbedBuilder } from "discord.js";
+import { Colors, EmbedBuilder } from "discord.js";
 
 export const balance = async (interaction) => {
     await interaction.deferReply()
@@ -9,7 +9,8 @@ export const balance = async (interaction) => {
     const embed = new EmbedBuilder().setTitle("Balance").setDescription(`Your balance is $${data.balance}`).setColor("Green")
     await interaction.editReply({embeds: [embed]})
     } catch {
-
+        const embed = new EmbedBuilder.setTitle("Error").setDescription("Could not get balance").setColor(Colors.Red)
+        await interaction.editReply({embeds:[embed]})
     }
 
 }
