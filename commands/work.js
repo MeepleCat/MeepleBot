@@ -12,11 +12,10 @@ export const work = async (interaction) => {
     const remainingTime = (60 * 60 * 1000) - timeSinceLastWork; 
 
     // INFO: determines the amount of money that is recieved
-    // TODO: SET BOTH 1's TO 60 BEFORE COMMITING
     if (timeSinceLastWork >= 60 * 60 * 1000) {
         let salary = Math.floor(Math.random() * 1000);
 
-        // INFO: in order to add another even you must add the event in outcomes and set its chance in probabilities (the number used as the chance does not matter)
+        // INFO: in order to add another event you must add the event in outcomes and set its chance in probabilities (the number used as the chance does not matter)
         const outcomes = [
             `You worked at Pizza Hut and got `,
             `You were promoted to manager of Pizza Hut and gained `,
