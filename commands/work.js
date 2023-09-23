@@ -17,12 +17,28 @@ export const work = async (interaction) => {
 
         // INFO: in order to add another event you must add the event in outcomes and set its chance in probabilities (the number used as the chance does not matter)
         const outcomes = [
-            `You worked at Pizza Hut and got `,
-            `You were promoted to manager of Pizza Hut and gained `,
+            `You worked at Pizza Hut and got $`,
+            `You were promoted to manager of Pizza Hut and gained $`,
+            `You became a barista at the local coffee shop and earned $`,
+            `You wrote a best-selling novel and received royalties of $`,
+            `You taught a weekend workshop on photography and made $`,
+            `You started a dog walking business and collected $`,
+            `You sold handmade crafts at the local fair and pocketed $`,
+            `You were hired as a tour guide at the museum and received $`,
+            `You won a local talent show with your band and got a prize of $`,
+            `You set up a lemonade stand during a hot day and gained $`,
         ];
         const probabilities = [
             10, 
             1,
+            10,
+            3,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
         ]
 
         // INFO: picks a number that is less than the total probability
