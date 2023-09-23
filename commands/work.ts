@@ -1,7 +1,7 @@
 import { EmbedBuilder } from "@discordjs/builders";
-import { Colors } from "discord.js";
+import {Colors, CommandInteraction} from "discord.js";
 
-export const work = async (interaction) => {
+export const work = async (interaction:CommandInteraction) => {
     await interaction.deferReply();
 
     // INFO: gets the values from the database
@@ -102,6 +102,6 @@ export const work = async (interaction) => {
     } else {
         const remainingMinutes = Math.ceil(remainingTime / (60 * 1000));
         const embed = new EmbedBuilder().setTitle("Job").setDescription(`Please wait for another ${remainingMinutes} minute(s) before working again.`).setColor(Colors.Red)
-        interaction.editReply({embeds:[embed]});
+        await interaction.editReply({embeds:[embed]});
     }
 } 

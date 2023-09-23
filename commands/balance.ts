@@ -1,6 +1,6 @@
-import { Colors, EmbedBuilder } from "discord.js";
+import {Colors, CommandInteraction, EmbedBuilder} from "discord.js";
 
-export const balance = async (interaction) => {
+export const balance = async (interaction:CommandInteraction) => {
     await interaction.deferReply()
     try {
     const balance = await fetch(`http://localhost:3001/user/${interaction.user.id}/balance`)

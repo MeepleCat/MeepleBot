@@ -1,16 +1,16 @@
-import { EmbedBuilder } from "discord.js";
+import {CommandInteraction, EmbedBuilder} from "discord.js";
 
-export const sendMoney = async (interaction) => {
+export const sendMoney = async (interaction:CommandInteraction) => {
     if (interaction.options.get("username").value != interaction.user.id){
     await interaction.deferReply();
     const senderBalance = await (await fetch(`http://localhost:3001/user/${interaction.user.id}/balance`)).json()
     const recipientBalance = await (await fetch(`http://localhost:3001/user/${interaction.options.get("username").value}/balance`)).json()
     
-    if ((senderBalance.balance - interaction.options.get("money").value) < 0) {
+    if ((senderBalance.balance - (interaction.options.get("money").value as number)) < 0) {
         const embed = new EmbedBuilder().setTitle("Transaction").setDescription("You don't have enough money to do that").setColor("Red")
         await interaction.editReply({embeds: [embed]})
         return;
-    } else if (interaction.options.get("money").value <= 0) {
+    } else if ((interaction.options.get("money").value as number) <= 0) {
         const embed = new EmbedBuilder().setTitle("Transaction").setDescription("You can't give someone a negative number or 0.").setColor("Red")
         await interaction.editReply({embeds: [embed]})
         return;
@@ -22,7 +22,7 @@ export const sendMoney = async (interaction) => {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            balance: senderBalance.balance - interaction.options.get("money").value
+            balance: senderBalance.balance - (interaction.options.get("money").value as number)
         })
     })
 
@@ -52,8 +52,6 @@ export const sendMoney = async (interaction) => {
     })
     } else {
         const embed = new EmbedBuilder().setTitle("Transaction").setDescription("You can't give money to yourself.").setColor("Red")
-        interaction.reply({embeds: [embed]})
+        await interaction.reply({embeds: [embed]})
     }
-
-
 }
