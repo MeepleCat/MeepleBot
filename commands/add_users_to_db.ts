@@ -1,7 +1,7 @@
 import {CommandInteraction} from "discord.js";
 import {addUser} from "../helpers/addUser";
 export const add_users_to_db = async (interaction:CommandInteraction) => {
-    if (process.env.whitelist.includes(interaction.user.id)){
+    if (process.env.admins && process.env.admins.includes(interaction.user.id)){
     await interaction.deferReply();
     const startTime = Date.now();
         const members = await interaction.guild.members.fetch();
