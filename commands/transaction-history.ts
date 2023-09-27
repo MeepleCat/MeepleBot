@@ -4,6 +4,7 @@ import {Transaction} from "../types/transaction";
 
 export const transactionHistory = async (interaction:CommandInteraction) => {
     await interaction.deferReply();
+    try {
     const senderHistory = await (await fetch(`http://localhost:3001/transactions/senderId/${interaction.user.id}`)).json()
     const receiverHistory = await (await fetch(`http://localhost:3001/transactions/receiverId/${interaction.user.id}`)).json()
 
@@ -19,4 +20,7 @@ export const transactionHistory = async (interaction:CommandInteraction) => {
         { name: 'Receiver History', value: receiverString == "" ? "Nothing" : receiverString}
         ).setColor(Colors.Green)
     await interaction.editReply({embeds: [embed]})
+    } catch {
+        interaction.editReply("Could not get transaction history")
+    }
 }

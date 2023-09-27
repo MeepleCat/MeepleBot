@@ -3,7 +3,7 @@ import {Colors, CommandInteraction} from "discord.js";
 
 export const work = async (interaction:CommandInteraction) => {
     await interaction.deferReply();
-
+    try {
     // INFO: gets the values from the database
     const previousBalance = await (await fetch(`http://localhost:3001/user/${interaction.user.id}/balance`)).json();
     const lastWorkTime = await (await fetch(`http://localhost:3001/user/${interaction.user.id}/job`)).json(); // Unix timestamp of when the user has last worked.
@@ -103,5 +103,8 @@ export const work = async (interaction:CommandInteraction) => {
         const remainingMinutes = Math.ceil(remainingTime / (60 * 1000));
         const embed = new EmbedBuilder().setTitle("Job").setDescription(`Please wait for another ${remainingMinutes} minute(s) before working again.`).setColor(Colors.Red)
         await interaction.editReply({embeds:[embed]});
+    }
+    } catch {
+        interaction.editReply("Could not work")
     }
 } 

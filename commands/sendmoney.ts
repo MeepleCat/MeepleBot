@@ -3,6 +3,7 @@ import {CommandInteraction, EmbedBuilder} from "discord.js";
 export const sendMoney = async (interaction:CommandInteraction) => {
     if (interaction.options.get("username").value != interaction.user.id){
     await interaction.deferReply();
+    try {
     const senderBalance = await (await fetch(`http://localhost:3001/user/${interaction.user.id}/balance`)).json()
     const recipientBalance = await (await fetch(`http://localhost:3001/user/${interaction.options.get("username").value}/balance`)).json()
     
@@ -50,6 +51,9 @@ export const sendMoney = async (interaction:CommandInteraction) => {
             moneySent: interaction.options.get("money").value,
         })
     })
+    } catch {
+        interaction.editReply("Could not send money")
+    }
     } else {
         const embed = new EmbedBuilder().setTitle("Transaction").setDescription("You can't give money to yourself.").setColor("Red")
         await interaction.reply({embeds: [embed]})

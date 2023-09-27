@@ -9,8 +9,7 @@ export const balance = async (interaction:CommandInteraction) => {
     const embed = new EmbedBuilder().setTitle("Balance").setDescription(`Your balance is $${data.balance}`).setColor("Green")
     await interaction.editReply({embeds: [embed]})
     } catch {
-        const embed = new EmbedBuilder().setTitle("Error").setDescription("Could not get balance").setColor(Colors.Red)
-        await interaction.editReply({embeds:[embed]})
+        interaction.editReply("Could not get balance")
     }
 
 }

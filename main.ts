@@ -9,11 +9,15 @@ import { transactionHistory } from "./commands/transaction-history";
 import { work } from "./commands/work";
 import { guildMemberAdd } from "./events/guildMemberAdd";
 import { guildCreate } from "./events/guildCreate";
+import { apply } from "./commands/apply";
+import { queue } from "./commands/queue";
+import { notify } from "./commands/notify";
 configDotenv();
 const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildMembers,
+        GatewayIntentBits.GuildMessages
     ]
 })
 
@@ -51,6 +55,18 @@ client.on("interactionCreate", async (interaction:Interaction)=>{
         }
         case "work": {
             await work(interaction)
+            break;
+        }
+        case "apply": {
+            await apply(interaction)
+            break;
+        }
+        case "queue": {
+            await queue(interaction)
+            break;
+        }
+        case "notify": {
+            await notify(interaction)
             break;
         }
     }
