@@ -15,6 +15,6 @@ export const queue = async (interaction:CommandInteraction) => {
     }
     } else {
         const embed = new EmbedBuilder().setTitle("Permissions error").setDescription("You are not authorized to do this action").setColor(Colors.Red)
-        await interaction.reply({embeds: [embed]})
+        await interaction.editReply({embeds: [embed]})
     }
 }

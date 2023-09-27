@@ -3,10 +3,6 @@ import { configDotenv } from "dotenv";
 import { publishCommands } from "./commands/publishCommands";
 import { commands } from './commands/commandStructure'
 import { add_users_to_db } from "./commands/add_users_to_db";
-import { balance } from "./commands/balance";
-import { sendMoney } from "./commands/sendmoney";
-import { transactionHistory } from "./commands/transaction-history";
-import { work } from "./commands/work";
 import { guildMemberAdd } from "./events/guildMemberAdd";
 import { guildCreate } from "./events/guildCreate";
 import { apply } from "./commands/apply";
@@ -39,22 +35,6 @@ client.on("interactionCreate", async (interaction:Interaction)=>{
     switch (interaction.commandName) {
         case "add_users_to_db": {
             await add_users_to_db(interaction)
-            break;
-        }
-        case "balance": {
-            await balance(interaction)
-            break;
-        }
-        case "send-money": {
-            await sendMoney(interaction)
-            break;
-        }
-        case "transaction-history": {
-            await transactionHistory(interaction)
-            break;
-        }
-        case "work": {
-            await work(interaction)
             break;
         }
         case "apply": {
