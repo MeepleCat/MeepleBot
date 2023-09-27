@@ -8,7 +8,7 @@ export const queue = async (interaction:CommandInteraction) => {
     const response = userQueue.map((user=>{
         return `<@${user.discordId}>`
     })).join('\n')
-    const embed = new EmbedBuilder().setTitle("Queue").setDescription(response).setColor(Colors.Green)
+    const embed = new EmbedBuilder().setTitle("Queue").setDescription(response ? response : "Nobody").setColor(Colors.Green)
     await interaction.editReply({embeds: [embed]})
     } catch {
         await interaction.editReply("Failed to get queue")
