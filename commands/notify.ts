@@ -9,7 +9,10 @@ export const notify = async (interaction:CommandInteraction) => {
             return `<@${option.value}>`
         }) // Constructs a string that has the user ids specified in the options
         users.map(async (option)=> {
-            await fetch(`http://localhost:3001/user/${option.value}/accept`) // Marks the user as whitelisted in DB
+            const userApplied = await (await fetch(`http://localhost:3001/user/${option.value}`)).json().then((response)=>{return response.applied})
+            if (userApplied) {
+                await fetch(`http://localhost:3001/user/${option.value}/accept`) // Marks the user as whitelisted in DB
+            }
         })
         const embed = new EmbedBuilder().setTitle("Notification").setDescription(`Notifying ${userIdsString}`).setColor(Colors.Green)
         await interaction.editReply({embeds:[embed]})

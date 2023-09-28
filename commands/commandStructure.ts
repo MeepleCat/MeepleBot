@@ -3,6 +3,14 @@ export const commands = [
         name: "apply",
         description: "Apply to the astroneer whitelist",
         type: 1,
+        options: [
+            {
+                name: "username",
+                description: "Put your astroneer username here",
+                type: 3,
+                required: true,
+            }
+        ]
     },
     {
         name: "queue",
@@ -31,5 +39,10 @@ export const commands = [
                     type: 6,
                 },
         ]
+    },
+    {
+        name: "add_users_to_db",
+        description: "Adds users to database, temporary command",
+        type: 1
     }
 ]
