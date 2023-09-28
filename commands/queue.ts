@@ -1,5 +1,8 @@
 import { Colors, CommandInteraction, EmbedBuilder } from "discord.js";
 
+// THIS IS BROKEN AND OLD, SWITCH TO NEW SYSTEM ON API
+// THIS IS BROKEN AND OLD, SWITCH TO NEW SYSTEM ON API
+// THIS IS BROKEN AND OLD, SWITCH TO NEW SYSTEM ON API
 export const queue = async (interaction:CommandInteraction) => {
     if (process.env.admins && process.env.admins.includes(interaction.user.id)) {
         await interaction.deferReply({ ephemeral: true });

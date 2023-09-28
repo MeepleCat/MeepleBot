@@ -1,5 +1,7 @@
 import { Colors, CommandInteraction, EmbedBuilder } from "discord.js";
 
+// THIS IS BROKEN AND OLD, SWITCH TO NEW SYSTEM ON API
+// THIS IS BROKEN AND OLD, SWITCH TO NEW SYSTEM ON API
 export const notify = async (interaction:CommandInteraction) => {
     await interaction.deferReply({ephemeral:true})
     try {
