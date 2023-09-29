@@ -1,30 +1,37 @@
-import { Colors, CommandInteraction, EmbedBuilder } from "discord.js";
+import {Colors, CommandInteraction, EmbedBuilder} from "discord.js";
 
-// THIS IS BROKEN AND OLD, SWITCH TO NEW SYSTEM ON API
-// THIS IS BROKEN AND OLD, SWITCH TO NEW SYSTEM ON API
 export const notify = async (interaction:CommandInteraction) => {
-    await interaction.deferReply({ephemeral:true})
     try {
-    if (process.env.admins && process.env.admins.includes(interaction.user.id)) { // Checks if the user's id that is running the command is inside the admins variable
-        const users = interaction.options.data // This gets the User IDS that are specified in the options
-        const userIdsString = users.map((option)=> {
-            return `<@${option.value}>`
-        }) // Constructs a string that has the user ids specified in the options
-        users.map(async (option)=> {
-            const userApplied = await (await fetch(`http://localhost:3001/user/${option.value}`)).json().then((response)=>{return response.applied})
-            if (userApplied) {
-                await fetch(`http://localhost:3001/user/${option.value}/accept`) // Marks the user as whitelisted in DB
+        await interaction.deferReply({ephemeral: true})
+        if(process.env.admins.includes(interaction.user.id)) {
+            const game = interaction.options.get("game").value
+            const options = interaction.options.data
+            const values = options.map(option => {
+                return option.value
+            })
+            const users = values.slice(1)
+            const userString = users.map(user => {
+                return `<@${user}>`
+            }).join(", ")
+            for (const user of users) {
+                const existence = await fetch(`http://localhost:3001/application/${game}/${user}/exists`).then(res => {
+                    return res.json()
+                })
+                if (existence.exists) {
+                    await fetch(`http://localhost:3001/application/${game}/${user}/accept`)
+                }
             }
-        })
-        const embed = new EmbedBuilder().setTitle("Notification").setDescription(`Notifying ${userIdsString}`).setColor(Colors.Green)
-        await interaction.editReply({embeds:[embed]})
-        await interaction.channel.send(`${userIdsString}, you have been whitelisted`)
-    
-    } else {
-        const embed = new EmbedBuilder().setTitle("Permission error").setDescription("You are not authorized to use this command").setColor(Colors.Red)
-        interaction.editReply({embeds:[embed]})
-    }
+
+            const response = new EmbedBuilder()
+                .setTitle(`Notifying`)
+                .setDescription(`Notifying ${userString}`)
+                .setColor(Colors.Purple)
+            await interaction.editReply({embeds: [response]})
+            await interaction.channel.send(`${userString}, you have been whitelisted on ${game}`)
+        } else {
+            await interaction.editReply("You can't do this")
+        }
     } catch {
-        interaction.editReply("Failed to notify")
+        await interaction.editReply("Could not notify, is the bot able to speak here?")
     }
 }

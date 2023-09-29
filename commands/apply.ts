@@ -1,23 +1,41 @@
-import { Colors, CommandInteraction, EmbedBuilder } from "discord.js";
+import {Colors, CommandInteraction, EmbedBuilder} from "discord.js";
 
-
-// THIS IS BROKEN AND OLD, SWITCH TO NEW SYSTEM ON API
-export const apply = async (interaction:CommandInteraction) => {
-    await interaction.deferReply()
+export const apply = async (interaction: CommandInteraction) => {
     try {
-    await fetch(`http://localhost:3001/user/${interaction.user.id}/whitelist`)
-    await fetch(`http://localhost:3001/user/${interaction.user.id}/astroneerusername`, {
-        method: "PUT",
-        headers: {
-            'Content-Type': "application/json"
-        },
-        body: JSON.stringify({
-            astroneerUsername: interaction.options.get("username").value
+        await interaction.deferReply();
+        const username = interaction.options.get("username").value
+        const game = interaction.options.get("game").value
+
+        // Checks for existing application
+        const existence = await fetch(`http://localhost:3001/application/${game}/${interaction.user.id}/exists`).then(res=>{
+            return res.json()
         })
-    })
-    const embed = new EmbedBuilder().setTitle("Application").setDescription("You have applied to get whitelisted").setColor(Colors.Green)
-    await interaction.editReply({embeds: [embed]})
+
+        if (existence.exists) {
+            const response = new EmbedBuilder()
+                .setTitle("Application")
+                .setDescription(`You have already applied for ${game}`)
+                .setColor(Colors.Red)
+            await interaction.editReply({embeds: [response]})
+            return;
+        }
+        await fetch('http://localhost:3001/application', {
+            method: "POST",
+            headers: {
+                'Content-Type': "application/json"
+            },
+            body: JSON.stringify({
+                discordId: interaction.user.id,
+                username: username,
+                game: game
+            })
+        })
+        const response = new EmbedBuilder()
+            .setTitle("Application")
+            .setDescription(`You have successfully applied for ${game}`)
+            .setColor(Colors.Purple)
+        await interaction.editReply({embeds: [response]})
     } catch {
-    await interaction.editReply("Could not apply")
+        await interaction.editReply("Could not apply")
     }
 }

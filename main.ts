@@ -5,9 +5,10 @@ import { commands } from './commands/commandStructure'
 import { add_users_to_db } from "./commands/add_users_to_db";
 import { guildMemberAdd } from "./events/guildMemberAdd";
 import { guildCreate } from "./events/guildCreate";
-import { apply } from "./commands/apply";
-import { queue } from "./commands/queue";
-import { notify } from "./commands/notify";
+import {apply} from "./commands/apply";
+import {queue} from "./commands/queue";
+import {notify} from "./commands/notify";
+
 configDotenv();
 const client = new Client({
     intents: [
@@ -38,15 +39,15 @@ client.on("interactionCreate", async (interaction:Interaction)=>{
             break;
         }
         case "apply": {
-            await apply(interaction)
+            await apply(interaction);
             break;
         }
         case "queue": {
-            await queue(interaction)
+            await queue(interaction);
             break;
         }
         case "notify": {
-            await notify(interaction)
+            await notify(interaction);
             break;
         }
     }

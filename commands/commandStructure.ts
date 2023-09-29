@@ -6,23 +6,73 @@ export const commands = [
         options: [
             {
                 name: "username",
-                description: "Put your astroneer username here",
+                description: "Put your username here",
                 type: 3,
                 required: true,
+            },
+            {
+                name: "game",
+                description: "What game to view the queue of",
+                type: 3,
+                required: true,
+                choices: [
+                    {
+                       name: "astroneer",
+                        value: "astroneer"
+                    },
+                    {
+                        name: "minecraft",
+                        value: "minecraft"
+                    }
+                ]
             }
         ]
     },
     {
         name: "queue",
         description: "View the whitelisting queue (admins only)",
-        type: 1
+        type: 1,
+        options: [
+            {
+                name: "game",
+                description: "What game to view the queue of",
+                type: 3,
+                required: true,
+                choices: [
+                    {
+                        name: "astroneer",
+                        value: "astroneer"
+                    },
+                    {
+                        name: "minecraft",
+                        value: "minecraft"
+                    }
+                ]
+            }
+        ]
     },
     {
         name: "notify",
         description: "Allows admin to notify user",
         type: 1,
         options: [
-                {
+                 {
+                     name: "game",
+                     description: "The game you are whitelisting right now",
+                     type: 3,
+                     required: true,
+                     choices: [
+                         {
+                             name: "astroneer",
+                             value: "astroneer"
+                         },
+                         {
+                             name: "minecraft",
+                             value: "minecraft"
+                         }
+                     ]
+                 }
+                ,{
                     name: "user1",
                     description: "Multiple users to notify",
                     type: 6,
@@ -35,6 +85,41 @@ export const commands = [
                 },
                 {
                     name: "user3",
+                    description: "Multiple users to notify",
+                    type: 6,
+                },
+                {
+                    name: "user4",
+                    description: "Multiple users to notify",
+                    type: 6,
+                },
+                {
+                    name: "user5",
+                    description: "Multiple users to notify",
+                    type: 6,
+                },
+                {
+                    name: "user6",
+                    description: "Multiple users to notify",
+                    type: 6,
+                },
+                {
+                    name: "user7",
+                    description: "Multiple users to notify",
+                    type: 6,
+                },
+                {
+                    name: "user8",
+                    description: "Multiple users to notify",
+                    type: 6,
+                },
+                {
+                    name: "user9",
+                    description: "Multiple users to notify",
+                    type: 6,
+                },
+                {
+                    name: "user10",
                     description: "Multiple users to notify",
                     type: 6,
                 },
