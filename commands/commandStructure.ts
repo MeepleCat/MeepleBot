@@ -29,6 +29,34 @@ export const commands = [
         ]
     },
     {
+        name: "change_username",
+        description: "Change your username",
+        type: 1,
+        options: [
+            {
+                name: "game",
+                description: "What game to change the username on",
+                type: 3,
+                required: true,
+                choices: [
+                    {
+                        name: "astroneer",
+                        value: "astroneer"
+                    },
+                    {
+                        name: "minecraft",
+                        value: "minecraft"
+                    }
+                ]
+            }, {
+                name: "username",
+                description: "What to set your username as",
+                type: 3,
+                required: true,
+            }
+        ]
+    },
+    {
         name: "queue",
         description: "View the whitelisting queue (admins only)",
         type: 1,

@@ -9,7 +9,7 @@ export const queue = async (interaction:CommandInteraction) => {
                 return res.json()
             })
             const queueString = queue.map(application => {
-                return `<@${application.discordId}> - ${application.username}`
+                return `<@${application.discordId}> \`\`\`${application.username}\`\`\``
             }).join('\n')
 
             const response = new EmbedBuilder()

@@ -8,6 +8,7 @@ import { guildCreate } from "./events/guildCreate";
 import {apply} from "./commands/apply";
 import {queue} from "./commands/queue";
 import {notify} from "./commands/notify";
+import {change_username} from "./commands/change_username";
 
 configDotenv();
 const client = new Client({
@@ -48,6 +49,10 @@ client.on("interactionCreate", async (interaction:Interaction)=>{
         }
         case "notify": {
             await notify(interaction);
+            break;
+        }
+        case "change_username": {
+            await change_username(interaction);
             break;
         }
     }
