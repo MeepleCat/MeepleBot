@@ -6,14 +6,18 @@ using MeepleBot.objects;
 namespace MeepleBot.commands;
 
 // The whole point of this command is to measure how long it takes for the database transaction to finish, this does not include the extra delay of fetching the discord members through discord's API
-public class BenchmarkCommand : ApplicationCommand
+public class BenchmarkCommand : ApplicationCommandModule
 {
+    private static RealmDatabaseService _databaseService;
+    public BenchmarkCommand(RealmDatabaseService databaseService)
+    {
+        _databaseService = databaseService;
+    }
     [SlashCommand("benchmark", "This command allows the developers to benchmark how fast the bot is")]
-    public async Task Benchmark(InteractionContext context)
+    public static async Task Benchmark(InteractionContext context)
     {
         await context.DeferAsync();
-
-        var databaseService = new RealmDatabaseService();
+        
         var members = context.Guild.Members;
 
         var startTime = DateTimeOffset.UtcNow;
@@ -21,7 +25,7 @@ public class BenchmarkCommand : ApplicationCommand
         var usersToAdd = members.Values
             .Select(member => new UserObject { DiscordId = member.Id.ToString(), Username = member.Username })
             .ToList();
-        await databaseService.AddUsers(usersToAdd);
+        await _databaseService.AddUsers(usersToAdd);
 
         var endTime = DateTimeOffset.UtcNow;
         var elapsedMilliseconds = Math.Round((endTime - startTime).TotalMilliseconds);

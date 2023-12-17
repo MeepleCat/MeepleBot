@@ -4,10 +4,15 @@ using MeepleBot.database;
 
 namespace MeepleBot.commands;
 
-public class NotifyCommand : ApplicationCommand
+public class NotifyCommand : ApplicationCommandModule
 {
+    private static RealmDatabaseService _databaseService;
+    public NotifyCommand(RealmDatabaseService databaseService)
+    {
+        _databaseService = databaseService;
+    }
     [SlashCommand("notify", "Notify a user")]
-    public async Task Notify(
+    public static async Task Notify(
         InteractionContext context,
         [Option("user", "The user you want to notify")]
         DiscordUser user1
@@ -24,13 +29,12 @@ public class NotifyCommand : ApplicationCommand
             return;
         }
         await context.DeferAsync(ephemeral: true);
+        
+        var userApplication = await _databaseService.GetUserApplication(user1.Id.ToString());
 
-        var databaseService = new RealmDatabaseService();
-        var userApplication = await databaseService.GetUserApplication(user1.Id.ToString());
-
-        if (userApplication != null)
+        if (userApplication != null && userApplication.Accepted == false)
         {
-            await databaseService.AcceptUser(userApplication);
+            await _databaseService.AcceptUser(userApplication);
         }
         else
         {

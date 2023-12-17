@@ -2,70 +2,103 @@ using DSharpPlus.Entities;
 using MeepleBot.objects;
 using Realms;
 using Realms.Sync;
+using System;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace MeepleBot.database;
-
-// Could probably divide this into subclasses? for example, one dedicated to working with users and another dedicated to working with applications
-public class RealmDatabaseService
+namespace MeepleBot.database
 {
-    private readonly Realm _realm;
-
-    public RealmDatabaseService()
+    public class RealmDatabaseService
     {
-        var config = new RealmConfiguration(Path.Join(Environment.CurrentDirectory, "meeplebot.realm"))
+        private RealmConfiguration GetRealmConfiguration()
         {
-            SchemaVersion = 1,
-        };
-        _realm = Realm.GetInstance(config);
-    }
-    public async Task CreateApplication(string id, string game, string username)
-    {
-        DateTimeOffset time = new(DateTime.UtcNow);
-        string unixTime = time.ToUnixTimeMilliseconds().ToString();
-        await _realm.WriteAsync(() =>
-        {
-            _realm.Add(new ApplicationObject()
+            return new RealmConfiguration(Path.Join(Environment.CurrentDirectory, "meeplebot.realm"))
             {
-                Time = unixTime,
-                DiscordId = id,
-                Game = game,
-                Username = username,
+                SchemaVersion = 1
+            };
+        }
+
+        public async Task CreateApplication(string id, string game, string username)
+        {
+            var time = DateTimeOffset.UtcNow;
+            string unixTime = time.ToUnixTimeMilliseconds().ToString();
+            var config = GetRealmConfiguration();
+
+            using var realm = await Realm.GetInstanceAsync(config);
+            await realm.WriteAsync(() =>
+            {
+                realm.Add(new ApplicationObject()
+                {
+                    Time = unixTime,
+                    DiscordId = id,
+                    Game = game,
+                    Username = username
+                });
             });
-        });
-    }
+        }
 
-    public Task<bool> ApplicationExists(string id)
-    {
-        return Task.FromResult(_realm.All<ApplicationObject>().Any(application => application.DiscordId == id));
-    }
-
-    public Task<ApplicationObject?> GetUserApplication(string id)
-    {
-        var application = _realm.All<ApplicationObject>()
-            .FirstOrDefault(application => application.DiscordId == id && application.Accepted == false);
-        return Task.FromResult(application);
-    }
-    public Task<IQueryable<ApplicationObject>> GetApplications(string game)
-    {
-        var application = _realm.All<ApplicationObject>().Where(application => application.Game == game && application.Accepted == false);
-        return Task.FromResult(application);
-    }
-    public async Task AcceptUser(ApplicationObject userApplication)
-    {
-        using var transaction = await _realm.BeginWriteAsync();
-        userApplication.Accepted = true;
-        await transaction.CommitAsync();
-    }
-
-    public async Task AddUsers(IList<UserObject> users)
-    {
-        await _realm.WriteAsync(() =>
+        public async Task<bool> ApplicationExists(string id)
         {
-            foreach (var user in users)
+            var config = GetRealmConfiguration();
+            using var realm = await Realm.GetInstanceAsync(config);
+            return realm.All<ApplicationObject>().Any(application => application.DiscordId == id);
+        }
+
+        public async Task<ApplicationObject?> GetUserApplication(string id)
+        {
+            var config = GetRealmConfiguration();
+            using var realm = await Realm.GetInstanceAsync(config);
+            var application = realm.All<ApplicationObject>().FirstOrDefault(app => app.DiscordId == id);
+            return application;
+        }
+
+        public async Task<IQueryable<ApplicationObject>> GetApplications(string game)
+        {
+            var config = GetRealmConfiguration();
+            using var realm = await Realm.GetInstanceAsync(config);
+            var applications = realm.All<ApplicationObject>().Where(app => app.Game == game && app.Accepted == false);
+            return applications;
+        }
+
+        public async Task AcceptUser(ApplicationObject userApplication)
+        {
+            var config = GetRealmConfiguration();
+            using var realm = await Realm.GetInstanceAsync(config);
+            using var transaction = await realm.BeginWriteAsync();
+            var realmApp = realm.Find<ApplicationObject>(userApplication.DiscordId);
+            if (realmApp != null)
             {
-                _realm.Add(user);
+                realmApp.Accepted = true;
+                await transaction.CommitAsync();
             }
-        });
-        _realm.Dispose();
+        }
+
+        public async Task AddUsers(IList<UserObject> users)
+        {
+            var config = GetRealmConfiguration();
+            using var realm = await Realm.GetInstanceAsync(config);
+            await realm.WriteAsync(() =>
+            {
+                foreach (var user in users)
+                {
+                    realm.Add(user);
+                }
+            });
+        }
+
+        public async Task ChangeUsername(ApplicationObject userApplication, string newUsername)
+        {
+            var config = GetRealmConfiguration();
+            using var realm = await Realm.GetInstanceAsync(config);
+            using var transaction = await realm.BeginWriteAsync();
+            var realmApp = realm.Find<ApplicationObject>(userApplication.DiscordId);
+            if (realmApp != null)
+            {
+                realmApp.Username = newUsername;
+                realmApp.Accepted = false;
+                await transaction.CommitAsync();
+            }
+        }
     }
 }
