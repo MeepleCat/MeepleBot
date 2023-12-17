@@ -1,7 +1,0 @@
-{
-  "compilerOptions": {
-    "allowJs": true,
-    "esModuleInterop": true,
-    "downlevelIteration": true
-  }
-}
