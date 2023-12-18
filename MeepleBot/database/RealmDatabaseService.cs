@@ -18,11 +18,11 @@ public class RealmDatabaseService
         };
         _realm = Realm.GetInstance(config);
     }
-    public async Task CreateApplication(string id, string game, string username)
+    public Task CreateApplication(string id, string game, string username)
     {
         DateTimeOffset time = new(DateTime.UtcNow);
         string unixTime = time.ToUnixTimeMilliseconds().ToString();
-        await _realm.WriteAsync(() =>
+        return _realm.WriteAsync(() =>
         {
             _realm.Add(new ApplicationObject()
             {
@@ -34,21 +34,21 @@ public class RealmDatabaseService
         });
     }
 
-    public Task<bool> ApplicationExists(string id)
+    public async Task<bool> ApplicationExists(string id)
     {
-        return Task.FromResult(_realm.All<ApplicationObject>().Any(application => application.DiscordId == id));
+        return _realm.All<ApplicationObject>().Any(application => application.DiscordId == id);
     }
 
-    public Task<ApplicationObject?> GetUserApplication(string id)
+    public async Task<ApplicationObject?> GetUserApplication(string id)
     {
         var application = _realm.All<ApplicationObject>()
             .FirstOrDefault(application => application.DiscordId == id && application.Accepted == false);
-        return Task.FromResult(application);
+        return application;
     }
-    public Task<IQueryable<ApplicationObject>> GetApplications(string game)
+    public async Task<IQueryable<ApplicationObject>> GetApplications(string game)
     {
         var application = _realm.All<ApplicationObject>().Where(application => application.Game == game && application.Accepted == false);
-        return Task.FromResult(application);
+        return application;
     }
     public async Task AcceptUser(ApplicationObject userApplication)
     {
@@ -67,5 +67,13 @@ public class RealmDatabaseService
             }
         });
         _realm.Dispose();
+    }
+
+    public async Task ChangeUsername(ApplicationObject userApplication, string newUsername)
+    {
+        using var transaction = await _realm.BeginWriteAsync();
+        userApplication.Accepted = false;
+        userApplication.Username = newUsername;
+        await transaction.CommitAsync();
     }
 }
