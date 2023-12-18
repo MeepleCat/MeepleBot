@@ -6,13 +6,8 @@ namespace MeepleBot.commands;
 
 public class ApplicationCommand : ApplicationCommandModule
 {
-    private static RealmDatabaseService _databaseService;
-    public ApplicationCommand(RealmDatabaseService databaseService)
-    {
-        _databaseService = databaseService;
-    }
     [SlashCommand("apply", "Apply for a game using this command")]
-    public static async Task Apply(
+    public async Task Apply(
         InteractionContext context,
         [Option("username", "What your IGN is")]
         string username,
@@ -21,12 +16,13 @@ public class ApplicationCommand : ApplicationCommandModule
     )
     {
         await context.DeferAsync();
+        var databaseService = new RealmDatabaseService();
         try
         {
-            if (!await _databaseService.ApplicationExists(context.User.Id
+            if (!await databaseService.ApplicationExists(context.User.Id
                     .ToString())) // Checks if the application already exists
             {
-                await _databaseService.CreateApplication(context.User.Id.ToString(), game, username);
+                await databaseService.CreateApplication(context.User.Id.ToString(), game, username);
             }
             else
             {

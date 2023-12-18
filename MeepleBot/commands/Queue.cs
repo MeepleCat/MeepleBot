@@ -2,19 +2,11 @@
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 using MeepleBot.database;
-using MeepleBot.objects;
 
 namespace MeepleBot.commands;
 
-public class QueueCommand : ApplicationCommandModule
+public class QueueCommand : ApplicationCommand
 {
-    private readonly RealmDatabaseService _databaseService;
-
-    public QueueCommand(RealmDatabaseService databaseService)
-    {
-        _databaseService = databaseService;
-    }
-
     [SlashCommand("queue", "Returns the queue for a game")]
     public async Task Queue(
         InteractionContext context,
@@ -33,16 +25,9 @@ public class QueueCommand : ApplicationCommandModule
             return;
         }
         await context.DeferAsync(ephemeral: true);
-        IQueryable<ApplicationObject> applications;
-        try
-        {
-            applications = await _databaseService.GetApplications(game);
-        }
-        catch(Exception e)
-        {
-            Console.WriteLine(e);
-            return;
-        }
+
+        var databaseService = new RealmDatabaseService();
+        var applications = await databaseService.GetApplications(game);
 
         var responseBuilder = new StringBuilder();
         foreach (var application in applications)
