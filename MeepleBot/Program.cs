@@ -1,6 +1,8 @@
 ﻿using DSharpPlus;
 using DSharpPlus.SlashCommands;
 using MeepleBot.commands;
+using MeepleBot.database;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace MeepleBot;
 
@@ -9,6 +11,9 @@ static class MeepleBot
 {
     private static async Task Main()
     {
+        var services = new ServiceCollection();
+        ConfigureServices(services);
+        var serviceProvider = services.BuildServiceProvider();
         DiscordClient client = new(new DiscordConfiguration()
         {
             Token = (await GetToken()),
@@ -25,11 +30,14 @@ static class MeepleBot
         }
 
         Logging.Logger.LogInfo(Logs.Discord, $"Logged in as {client.CurrentUser.Username}");
-        await RegisterCommands(client);
+        await RegisterCommands(client, serviceProvider);
         Logging.Logger.LogInfo(Logs.Discord, "Slash commands registered");
         await Task.Delay(-1); // Keep the bot alive forever
     }
-
+    private static void ConfigureServices(IServiceCollection services) // DI
+    {
+        services.AddSingleton<RealmDatabaseService>();
+    }
     private static Task<String> GetToken()
     {
         return Task.Run(() =>
@@ -49,9 +57,12 @@ static class MeepleBot
         });
     }
 
-    private static Task RegisterCommands(DiscordClient clientContext)
+    private static Task RegisterCommands(DiscordClient clientContext, IServiceProvider services)
     {
-        var slash = clientContext.UseSlashCommands();
+        var slash = clientContext.UseSlashCommands(new SlashCommandsConfiguration
+        {
+            Services = services
+        });
         slash.RegisterCommands<ApplicationCommand>();
         slash.RegisterCommands<QueueCommand>();
         slash.RegisterCommands<NotifyCommand>();
